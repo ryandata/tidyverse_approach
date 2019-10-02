@@ -14,16 +14,14 @@ install.packages("ggthemes")
 install.packages("gganimate")
 install.packages("gapminder")
 install.packages("cowplot")
+install.packages("hexbin")
+install.packages("gridExtra")
+install.packages("RColorBrewer")
+install.packages("gifski")
+install.packages("png")
 
 # for a couple of comparisons, we will use lattice
 install.packages("lattice")
-
-# also for the Anscombe example
-install.packages("grid")
-install.packages("gridExtra")
-
-# plus RColorBrewer, if not already installed
-install.packages("RColorBrewer")
 
 # load packages
 library(lattice)
@@ -136,7 +134,7 @@ ggplot(diamonds, aes(x=carat,y=price)) + xlim(0,3) + geom_point(colour="steelblu
 dev.off()
 
 jpeg(file="output.jpg", width = 800, height = 600, quality=100)
-mydata+mytheme+mychart
+ggplot(diamonds, aes(depth))+geom_histogram(aes(fill = ..count..))
 dev.off()
 
 # histogram
