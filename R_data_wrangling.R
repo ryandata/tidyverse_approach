@@ -31,7 +31,7 @@ mydata
 
 # readxl for .xls and .xlsx sheets.
 
-install.packages("readxl")
+# install.packages("readxl")
 library(readxl)
 
 download.file("https://ryanwomack.com/data/mydata.xlsx", "mydata.xlsx")
@@ -71,12 +71,14 @@ mydata<-read_excel("mydata.xlsx", 1)
 # data.frame is the traditional R data structure
 # many packages still expect it
 
+library(tibble)
+
 # "as" functions in R convert back and forth between formats
 # "." notation in base R, "_" notation in tidyverse
 as.data.frame(mydata)
 as_tibble(iris)
 
-# data.frame
+# data.table
 # not a part of tidyverse
 
 # https://github.com/Rdatatable/data.table
@@ -171,6 +173,7 @@ gender_gdp <-
   select(gender_data2017wide, c(`Country Name`,starts_with("GDP")))
 
 gender_gdp
+write_csv(gender_gdp, "gender_gdp.csv")
 
 # filter() picks cases based on their values.
 
@@ -179,6 +182,7 @@ gender_data2017filtered <-
   filter(gdp_ratio>2)
 
 gender_data2017filtered
+write_csv(gender_data2017filtered, "gender_filtered.csv")
 
 # summarise() reduces multiple values down to a single summary.
 
@@ -190,26 +194,39 @@ gender_data2017wide %>%
   group_by(hi_ratio) %>%
   summarise(mean = mean(gdp_ratio, na.rm=TRUE), n = n())
 
+# see http://www.milanor.net/blog/aggregation-dplyr-summarise-summarise_each/
+# for some more options
+
 
 # arrange() changes the ordering of the rows.
 
-gender_gdp %>% 
+gender_gdp <-
+  gender_gdp %>% 
   arrange(desc(gdp_ratio))
 
-gender_gdp
+gender_gdp$gdp_ratio
+write_csv(gender_gdp, "gender_gdp.csv")
 
 # These all combine naturally with group_by() 
 # which allows you to perform any operation “by group”. 
 # You can learn more about them in vignette("dplyr"). 
-# As well as these single-table verbs, dplyr also provides a variety of two-table verbs, which you can learn about in vignette("two-table").
+# As well as these single-table verbs, 
+# dplyr also provides a variety of two-table verbs, 
+# which you can learn about in vignette("two-table").
 
 # Wrangle
 # In addition to tidyr, and dplyr, 
-# there are five packages which are designed to work with specific types of data:
+# there are five packages which are designed 
+# to work with specific types of data:
   
-# lubridate for dates and date-times.
-# hms for time-of-day values.
-# blob for storing blob (binary) data.
+# lubridate 
+# for dates and date-times.
+
+# hms 
+# for time-of-day values.
+
+# blob 
+# for storing blob (binary) data.
 
 # stringr
 # stringr provides a cohesive set of functions 
@@ -246,7 +263,36 @@ mtcars %>%
 # You may also find broom to be useful: 
 # it turns models into tidy data which you can then 
 # wrangle and visualise using the tools you already know.
+# tidy, glance, and augment
+# are the key functions
 
+library(broom)
+
+regoutput<-lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, gender_data2017wide)
+tidy(regoutput)
+glance(regoutput)
+augment(regoutput)
+
+# a grouped example
+
+regressions <- gender_data2017wide %>%
+  group_by(hi_ratio) %>%
+  nest() %>% 
+  mutate(
+    fit = map(data, ~ lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, data=.x)),
+    tidied = map(fit, tidy),
+    glanced = map(fit, glance),
+    augmented = map(fit, augment)
+  )
+
+regressions %>% 
+  unnest(tidied)
+  
+regressions %>% 
+  unnest(glanced)
+
+regressions %>% 
+  unnest(augmented)
 
 # For a more complete introduction, consult
 # R for Data Science
