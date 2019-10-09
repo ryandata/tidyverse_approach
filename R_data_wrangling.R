@@ -1,0 +1,253 @@
+# R data wrangling with dplyr, tidyr, readr, and more
+# 
+# Ryan Womack, rwomack@rutgers.edu
+# 2019-10-09 version
+
+# install packages
+install.packages("tidyverse")
+
+# load packages
+library(tidyverse)
+
+# "base" tidyverse includes
+# ggplot2, which we've already seen 
+# readr, purrr, forcats, stringr, dplyr, tibble, tidyr
+# which focus on data manipulation
+
+# Importing data
+
+# readr
+# importing data with readr
+# start with a tab-separated file
+download.file("https://ryanwomack.com/data/myfile.txt", "myfile.txt")
+mydata <- read_tsv("myfile.txt")
+mydata
+
+# later we will see read_csv
+
+# see readr.tidyverse.org for complete details
+
+# As well as readr, for reading flat files, the tidyverse includes:
+
+# readxl for .xls and .xlsx sheets.
+
+install.packages("readxl")
+library(readxl)
+
+download.file("https://ryanwomack.com/data/mydata.xlsx", "mydata.xlsx")
+mydata<-read_excel("mydata.xlsx", 1)
+# read_excel command also imports .xls files
+# writexl package can export/save Excel files from R
+
+# haven 
+# for SPSS, Stata, and SAS data.
+
+# googledrive 
+# allows you to interact with files on Google Drive from R.
+
+# the following are not in the tidyverse, but are useful
+
+# jsonlite
+# for JSON.
+
+# xml2 
+# for XML.
+
+# httr 
+# for web APIs.
+
+# rvest 
+# for web scraping.
+
+# DBI 
+# for relational databases. 
+# To connect to a specific database, 
+# you’ll need to pair DBI with a specific backend 
+# like RSQLite, RPostgres, or odbc. Learn more at https://db.rstudio.com.
+
+# tibble
+# https://tibble.tidyverse.org/
+# the tibble is a "better-behaved" data.frame, at least in some ways
+# data.frame is the traditional R data structure
+# many packages still expect it
+
+# "as" functions in R convert back and forth between formats
+# "." notation in base R, "_" notation in tidyverse
+as.data.frame(mydata)
+as_tibble(iris)
+
+# data.frame
+# not a part of tidyverse
+
+# https://github.com/Rdatatable/data.table
+
+# high performance version of data.frame suitable for big data applications
+# fread to import data
+
+# tidyr
+# https://tidyr.tidyverse.org
+
+# The goal of tidyr is to help you create tidy data. Tidy data is data where:
+  
+# Every column is variable.
+# Every row is an observation..
+# Every cell is a single value.
+
+# load data - gender_stats - see R_for_Data_Analysis.R for details
+download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip", "gender.zip")
+unzip("gender.zip")
+gender_data <- read_csv("Gender_StatsData.csv")
+gender_data <- gender_data[,c(-2,-4)]
+
+# pivot_longer 
+# to create long format data
+gender_data2 <- pivot_longer(gender_data, 3:62, names_to = "Year", values_to = "Value")
+
+# the "pipe"
+# magrittr provides the pipe, %>% used throughout the tidyverse
+
+gender_data2017 <-
+  gender_data2 %>%
+  filter(Year=="2017")
+gender_data2017 <- gender_data2017[,-3]
+
+# pivot_wider 
+# to create wide format data
+gender_data2017wide <- 
+  gender_data2017 %>%
+  pivot_wider(names_from = "Indicator Name", values_from = "Value")
+
+# drop_na()
+gender_data_drop_na <-
+    gender_data2017wide %>%
+    drop_na()
+# be careful - here that dropped ALL cases
+
+# complete()
+gender_data_complete <-
+  gender_data2017wide %>%
+  complete()
+
+# nested models
+mtcars_nested <- mtcars %>% 
+  group_by(cyl) %>% 
+  nest()
+
+mtcars_nested
+
+mtcars_nested <- mtcars_nested %>% 
+  mutate(model = map(data, function(df) lm(mpg ~ wt, data = df)))
+mtcars_nested
+mtcars_nested$model
+
+mtcars_nested <- mtcars_nested %>% 
+  mutate(model = map(model, predict))
+mtcars_nested$model
+
+
+# dplyr
+# https://dplyr.tidyverse.org
+
+
+# dplyr is a grammar of data manipulation, 
+# providing a consistent set of verbs 
+# that help you solve the most common data manipulation challenges:
+  
+# mutate() adds new variables that are functions of existing variables
+
+gender_data2017wide <- gender_data2017wide %>%
+  mutate(gdp_ratio = (`GDP per capita (Current US$)`/10000)/`Fertility rate, total (births per woman)`)
+
+plot(gender_data2017wide$gdp_ratio)
+
+gender_data2017wide <- gender_data2017wide %>%
+  mutate(hi_ratio = gdp_ratio>0.78)
+
+attach(gender_data2017wide)
+
+# select() picks variables based on their names.
+
+gender_gdp <-
+  select(gender_data2017wide, c(`Country Name`,starts_with("GDP")))
+
+gender_gdp
+
+# filter() picks cases based on their values.
+
+gender_data2017filtered <-
+  gender_data2017wide %>%
+  filter(gdp_ratio>2)
+
+gender_data2017filtered
+
+# summarise() reduces multiple values down to a single summary.
+
+gender_data2017wide %>%
+  summarise(mean = mean(gdp_ratio, na.rm=TRUE), n = n())
+
+# Usually, you'll want to group first
+gender_data2017wide %>%
+  group_by(hi_ratio) %>%
+  summarise(mean = mean(gdp_ratio, na.rm=TRUE), n = n())
+
+
+# arrange() changes the ordering of the rows.
+
+gender_gdp %>% 
+  arrange(desc(gdp_ratio))
+
+gender_gdp
+
+# These all combine naturally with group_by() 
+# which allows you to perform any operation “by group”. 
+# You can learn more about them in vignette("dplyr"). 
+# As well as these single-table verbs, dplyr also provides a variety of two-table verbs, which you can learn about in vignette("two-table").
+
+# Wrangle
+# In addition to tidyr, and dplyr, 
+# there are five packages which are designed to work with specific types of data:
+  
+# lubridate for dates and date-times.
+# hms for time-of-day values.
+# blob for storing blob (binary) data.
+
+# stringr
+# stringr provides a cohesive set of functions 
+# designed to make working with strings as easy as possible. 
+
+# forcats
+# forcats provides a suite of useful tools 
+# that solve common problems with factors. 
+# R uses factors to handle categorical variables, 
+
+
+# Program
+
+# purrr
+# purrr enhances R’s functional programming (FP) toolkit 
+# by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive. Learn more ...
+# starting with "map" family of functions
+
+mtcars %>%
+  split(.$cyl) %>% # from base R
+  map(~ lm(mpg ~ wt, data = .)) %>%
+  map(summary) %>%
+  map_dbl("r.squared")
+
+# In addition to purrr, which provides very consistent and natural methods 
+# for iterating on R objects, there are two additional tidyverse packages 
+# that help with general programming challenges:
+  
+# glue
+# glue provides an alternative to paste() 
+# that makes it easier to combine data and strings.
+
+# broom
+# You may also find broom to be useful: 
+# it turns models into tidy data which you can then 
+# wrangle and visualise using the tools you already know.
+
+
+# For a more complete introduction, consult
+# R for Data Science
+# https://r4ds.had.co.nz/
