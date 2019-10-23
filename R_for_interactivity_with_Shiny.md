@@ -1,7 +1,6 @@
-# R for interactivity with Shiny
-# 
-# Ryan Womack, rwomack@rutgers.edu
-# 2019-10-23 version
+## R for interactivity with Shiny
+## Ryan Womack, rwomack@rutgers.edu
+## 2019-10-23 version
 
 ## Let's start by looking at the basic documentation and gallery examples
 http://shiny.rstudio.com
@@ -23,7 +22,7 @@ http://shiny.rstudio.com/articles/reactivity-overview.html
 ## shinydashboard
 https://rstudio.github.io/shinydashboard/
 
-# publish to shinyapps.io
+## publish to shinyapps.io
 https://www.shinyapps.io/
 
 ## modularizing Shiny code
