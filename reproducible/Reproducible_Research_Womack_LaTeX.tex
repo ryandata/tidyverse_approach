@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{noweb}
+\usepackage{Sweave}
+\begin{document}
+\title{\textbf{A short literate programming exercise}}
+\author{Ryan Womack}
+\maketitle
+\SweaveOpts{concordance=TRUE}
+
+A short literate programming exercise
+
+\section{Read in the data}
+
+library(readxl)
+
+download.file("http://ryanwomack.com/data/PharmaDemo.xls", "mydata.xls")
+
+mydata<-read_excel("mydata.xls")
+
+names(mydata)
+
+attach(mydata)
+
+summary(Weight)
+
+library(ggplot2)
+
+ggplot(mydata, aes(Weight, Age))+geom_point()
+
+summary(lm(Age~Weight))
+
+ggplot(mydata, aes(Weight, Age))+geom_point()+stat_smooth()
+
+
+\end{document}

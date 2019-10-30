@@ -1,0 +1,49 @@
+\documentclass[english,noae]{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\title{A short literate programming exercise}
+
+\maketitle
+
+\section{Read in the data}
+
+Let's read in the data with the following commands:
+\begin{lyxcode}
+library(readxl)
+
+download.file(\textquotedbl{}http://ryanwomack.com/data/PharmaDemo.xls\textquotedbl{},~\textquotedbl{}mydata.xls\textquotedbl{})
+
+mydata<-read\_excel(\textquotedbl{}mydata.xls\textquotedbl{})
+
+names(mydata)
+
+attach(mydata)
+\end{lyxcode}
+
+\section{Describe the Data}
+
+Then we will get some summary statistics on the Age and Weight variables:
+\begin{lyxcode}
+summary(Age)
+
+summary(Weight)
+\end{lyxcode}
+Now plot the data:
+\begin{lyxcode}
+library(ggplot2)
+
+ggplot(mydata,~aes(Weight,~Age))+~geom\_point()
+\end{lyxcode}
+
+\section{Regression}
+
+And finally run a regression and plot it:
+\begin{lyxcode}
+summary(lm(Age\textasciitilde{}Weight))
+
+ggplot(mydata,~aes(Weight,~Age))+~geom\_point()+~stat\_smooth()
+\end{lyxcode}
+All done!
+\end{document}

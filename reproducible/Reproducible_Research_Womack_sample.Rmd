@@ -1,0 +1,57 @@
+---
+title: "A short literate programming exercise"
+author: "Ryan Womack"
+date: "October 10, 2016"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Read in the data
+
+Let's read in the data with the following commands:
+
+```{r load}
+library(readxl)
+
+download.file("https://ryanwomack.com/data/PharmaDemo.xls", "mydata.xls")
+
+mydata<-read_excel("mydata.xls")
+
+names(mydata)
+
+attach(mydata)
+
+```
+
+## Describe the Data
+
+Then we will get some summary statistics on the Age and Weight variables:
+
+```{r summary}
+summary(Age)
+
+summary(Weight)
+```
+
+Now plot the data:
+
+```{r plot, echo=FALSE}
+library(ggplot2)
+
+ggplot(mydata, aes(Weight, Age))+ geom_point()
+```
+
+## Regression
+
+```{r regression}
+summary(lm(Age~Weight))
+
+ggplot(mydata, aes(Weight, Age))+ geom_point()+ stat_smooth()
+```
+
+All done!
