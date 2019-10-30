@@ -1,84 +1,36 @@
-## R for reproducible scientific documents: knitr, rmarkdown, and beyond
+## R workshop series, a tidyverse approach
 ## Ryan Womack, rwomack@rutgers.edu
 ## 2019-10-30 version
 
-###  What is reproduciblity?
+###  Materials for the "tidyverse-centric" R workshop series
+###  First offered at Rutgers (New Brunswick Libraries) in Fall 2019
 
-####  Credibility in Science 
+## R for data analysis: a tidyverse approach 
 
-[Duke “starter set”](http://bioinformatics.mdanderson.org/Supplements/ReproRsch-All/Modified/StarterSet/index.html) and [article](http://science.sciencemag.org/content/353/6303/977?rss=1)
+Use **R_for_data_analysis.md**
 
-**Replication**, or redoing the (physical) experiment from scratch, is expensive, and may not be possible due to the passage of time. 
+The session introduces the R statistical software environment and basic methods of data analysis, and also introduces the "tidyverse".  While R is much more than the "tidyverse", the development of the "tidyverse" set of packages, led by RStudio, has provided a powerful and connected toolkit to get started with using R.  Note that graphics and data manipulation are covered in subsequent sessions.
 
-**Reproducibility** typically focuses on the computational aspects of data+code = results
+## R graphics with ggplot2 
 
-[*Science* on Replication and Reproducibility](http://www.sciencemag.org/content/334/6060.toc)
+Use **R_graphics_with_ggplot2.R**
 
-### Data Management
+The ggplot2 package from the tidyverse provides extensive and flexible graphical capabilities within a consistent framework.  This session introduces the main features of ggplot2. Some prior familiarity with R is assumed (packages, structure, syntax), but the presentation can be followed without this background.  
 
-Good data management is essential for reproducibility
-- Keep raw data pristine and separate from any working data
-- Document your variables and data collection as well as anything you yourself would forget when revisiting the project 3 years later in response to a query, as a codebook, data dictionary, or readme.
-- Don't work in Excel [if you can] or other manual editing environment for manipulating data
-- can create a standardized project directory structure with [ProjectTemplate](http://projecttemplate.net/) package
+## R data wrangling with dplyr, tidyr, readr and more 
 
-### Literate Programming
+Use **R_data_wrangling.R**
 
-Literate programming is "well-commented" code that explains itself.  Certain environments make this easier. Mathematica notebooks, Jupyter notebooks for Python are examples.
+Some of the most powerful features of the tidyverse relate to its abilities to import, filter, and otherwise manipulate data.  This session reviews major packages within the tidyverse that relate to the essential data handling steps require before (and during) data analysis.
 
-In R, literate programming can be achieved with LaTeX + [Sweave](https://stat.ethz.ch/R-manual/R-devel/library/utils/doc/Sweave.pdf) or *knitr* + *markdown/Rmarkdown* in RStudio.
+## R for interactivity: an introduction to Shiny 
 
-- can embed R code and run it as the document is generated.
-- Code that is “tangled” in with text can be extracted, and formatted documents can be “woven” or "knitted" from the literate program.
-- always ensures that the latest data and results are actually incorporated.
-- helps to document and explain code in context (literate programming).
-- PDF, document, and HTML formats are easy to obtain.
-- *formatR* package can clean up your code formatting
+Use **R_for_interactivity_with_Shiny.md**
 
-### knitr and markdown/RMarkdown
+Shiny is an R package that enables the creation of interactive websites for data visualization.   This session provides a brief overview of the Shiny framework, and how to edit and publish Shiny sites in RStudio (with shinyapps.io).  Familiarity with R/RStudio is assumed.
 
-- Markdown + [knitr](https://www.r-project.org/nosvn/pandoc/knitr.html) has become a popular, lightweight replacement for LaTex + Sweave
-- RMarkdown (.Rmd) allows R code execution, math formatting in addition to regular Markdown (.md) functionality
-- Simple syntax and implementation
-- Integrated into RStudio (as well as github for plain markdown)
-- Publish documents with one click at [RPubs](http://rpubs.com/ryandata/217248)
-- Can fall back on LaTeX/Sweave for more complex document formatting
+## R for reproducible scientific documents: knitr, rmarkdown, and beyond 
 
-### Package management
+Use **R_for_reproducibility.md**
 
-- Open source is an important enabler of reproducibility
-- Anyone can grab copies of the software to execute
-- And can get older versions if necessary for compatibility
-- You can also record information about your computing environment (session.Info() in R)
-- The **checkpoint** and **packrat** packages automate this process in R
-- snapshots from [MRAN](<https://mran.microsoft.com/timemachine>)
-- see also <https://rviews.rstudio.com/2018/01/18/package-management-for-reproducible-r-code/>
-- Reprozip, Docker, and Singularity are more comprehensive solutions, not R specific, to containerized environments
-
-### Creating packages for collaboration
-
-- Data and code can be distributed through packages, start with the package.skeleton() command or use RStudio guidance
-- Packages can encapsulate data, analytical functions, and documentation
-- see also http://ismayc.github.io/ecots2k16/template_pkg/
-- and [*R Packages*](http://r-pkgs.had.co.nz/) by Hadley Wickham
-- notably the [**ropensci**](https://ropensci.org/) project has many packages for reproducibility and collaboration.
-
-### Code sharing and version control
-
-- The same forces (cloud computing, shared platforms, standards) are making collaboration easier than ever
-- Github, Bitbucket, and others enable easy collaboration on programming, combined with version control
-- with significant side benefits for reproducibility due to availability of code
-- The [Open Science Framework](https://osf.io) provides a more data-specific approach
-- Many other data repositories exist.  See <https://re3data.org>.
-- Rproject in RStudio can integrate with github, packrat, and other tools, but is specific to RStudio
-
-### Conclusion and extensions
-
-For more info see the [CRAN Task View for Reproducible Research](https://cran.r-project.org/web/views/ReproducibleResearch.html)
-
-
-See [blogdown] (https://bookdown.org/yihui/blogdown/) and 
-
-[bookdown] (https://bookdown.org/home/)
-
-if you are interested in creating more long-form documents that can incorporate R code and analysis.
+The RStudio environment enables the easy creation of documents in various formats (HTML, DOC, PDF) using Rmarkdown, while knitr allows the incorporation of executable R code to produce the tables and figures in those documents. This session introduces these concepts and other packages and practices supporting reproducibility with the R environment.
