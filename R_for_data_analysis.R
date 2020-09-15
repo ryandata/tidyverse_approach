@@ -1,67 +1,8 @@
 # R for Data Analysis
 # A tidyverse approach
 # Ryan Womack, rwomack@rutgers.edu
-# 2019-09-25 version
+# 2020-09-15 version
 
-# install packages
-install.packages("tidyverse")
-
-# update packages
-update.packages()
-
-# load packages
-library(tidyverse)
-
-# grab data
-# the is the World Bank Gender Statstics database
-download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip", "gender.zip")
-unzip("gender.zip")
-
-# this is the base R read command
-# gender_data<-read.csv("Gender_StatsData.csv")
-# from tidyverse, read_csv is a simpler alternative
-gender_data <- read_csv("Gender_StatsData.csv")
-
-# matrix notation [row,column]
-gender_data[1,1]
-gender_data[1:10,1:6]
-gender_data[1:10,-1]
-
-# drop columns
-names(gender_data)
-gender_data <- gender_data[,c(-2,-4)]
-names(gender_data)
-
-# from tidyr
-# gather and spread used to be the commands to generate long or wide data
-# these are no longer being developed
-# pivot_longer and pivot_wider are the future
-
-# create data in long form
-gender_data2 <- pivot_longer(gender_data, 3:62, names_to = "Year", values_to = "Value")
-
-# alternative with pipes is below
-
-# gender_data3 <- 
-#   gender_data %>%
-#   pivot_longer(3:62, names_to = "Year", values_to = "Value")
-
-#filter
-gender_data2017 <-
-  gender_data2 %>%
-  filter(Year=="2017")
-
-gender_data2017 <- gender_data2017[,-3]
-
-gender_data2017wide <- 
-  gender_data2017 %>%
-  pivot_wider(names_from = "Indicator Name", values_from = "Value")
-
-# if we wanted to write output, we use a write function like write.csv
-# write.csv(gender_data2017wide,"genderout.csv")
-
-
-# now that we have created the dataset
 # let's look at a few preliminaries before analyzing the data
 
 # R is case sensitive
@@ -89,9 +30,79 @@ rnorm(10, mean=100, sd=20)
 # the R help system is easy to access
 ?sample
 ?rnorm
+ls()
+
+# install packages
+install.packages("tidyverse", dependencies = TRUE)
+
+# update packages
+update.packages()
+
+# load packages
+library(tidyverse)
+
+# check help again
 ?tidyverse
 library(help=tidyverse)
 ??tidy
+# also see https://tidyverse.org for complete documentation
+
+# grab data
+# the is the World Bank Gender Statstics database
+download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip", "gender.zip")
+unzip("gender.zip")
+
+# this is the base R read command
+# gender_data<-read.csv("Gender_StatsData.csv")
+# from tidyverse, read_csv is a simpler alternative
+gender_data <- read_csv("Gender_StatsData.csv")
+
+# matrix notation [row,column]
+gender_data[1,1]
+gender_data[1:10,1:6]
+gender_data[1:10,-1]
+
+# drop columns
+names(gender_data)
+gender_data <- gender_data[,c(-2,-4)]
+names(gender_data)
+
+# from tidyr
+# gather and spread used to be the commands to generate long or wide data
+# these are no longer being developed
+# pivot_longer and pivot_wider are the future
+
+# if you are on Rstudio or a system with limited memory
+# I recommend you reduce the size of the dataset
+# This will avoid crashes due to running out of memory
+
+gender_data<-gender_data[1:3000,]
+
+# create data in long form
+gender_data2 <- pivot_longer(gender_data, 3:62, names_to = "Year", values_to = "Value")
+
+# alternative with pipes is below
+
+# gender_data3 <- 
+#   gender_data %>%
+#   pivot_longer(3:62, names_to = "Year", values_to = "Value")
+
+#filter
+gender_data2017 <-
+  gender_data2 %>%
+  filter(Year=="2017")
+
+gender_data2017 <- gender_data2017[,-3]
+
+gender_data2017wide <- 
+  gender_data2017 %>%
+  pivot_wider(names_from = "Indicator Name", values_from = "Value")
+
+# if we wanted to write output, we use a write function like write.csv
+# write.csv(gender_data2017wide,"genderout.csv")
+
+
+# now that we have created the dataset
 
 # get information about data with summary
 ls()
@@ -214,3 +225,4 @@ cor.test(lifespread,`Fertility rate, total (births per woman)`)
 
 # we can also easily pull up regression diagnostic plots
 plot(regoutput, pch=3)
+

@@ -1,9 +1,6 @@
 # https://www.showmeshiny.com/
 # dynamically generated user interface text
 # https://shiny.rstudio.com/gallery/dynamic-ui.html
-library(tidyverse)
-mydata<-read_csv("sample.csv")
-attach(mydata)
 
 fluidPage(
   
@@ -11,8 +8,8 @@ fluidPage(
   
   # number in the column expression sets the width of the column
  sidebarPanel(
-    selectInput("myx", "x-axis variable", choices = c("age","height"), selected="age"),
-    selectInput("myy", "y-axis variable", choices = c("age","height"), selected="age")
+    selectInput("myx", label = "x-axis variable", choices = c("age","height","weight"), selected="age"),
+    selectInput("myy", label="y-axis variable", choices = c("age","height","weight"), selected="age")
   ),
   
  mainPanel("scattered",
