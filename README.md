@@ -1,6 +1,6 @@
 ## R workshop series, a tidyverse approach
 ## Ryan Womack, rwomack@rutgers.edu
-## 2019-10-30 version
+## 2020-09-15 version
 
 ###  Materials for the "tidyverse-centric" R workshop series
 ###  First offered at Rutgers (New Brunswick Libraries) in Fall 2019
