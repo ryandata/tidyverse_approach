@@ -7,6 +7,9 @@
 
 ## R for data analysis: a tidyverse approach 
 
+### Full Playlist of screencasts for this series at 
+https://www.youtube.com/playlist?list=PLCj1LhGni3hNxsLsVNHX6V1LICyklHl2a
+
 Use **R_for_data_analysis.md**
 
 The session introduces the R statistical software environment and basic methods of data analysis, and also introduces the "tidyverse".  While R is much more than the "tidyverse", the development of the "tidyverse" set of packages, led by RStudio, has provided a powerful and connected toolkit to get started with using R.  Note that graphics and data manipulation are covered in subsequent sessions.
