@@ -4,6 +4,9 @@
 
 ###  Materials for the "tidyverse-centric" R workshop series
 ###  First offered at Rutgers (New Brunswick Libraries) in Fall 2019
+### Full Playlist of screencasts for the Fall 2020 series at 
+https://www.youtube.com/playlist?list=PLCj1LhGni3hNxsLsVNHX6V1LICyklHl2a
+
 
 ## R for data analysis: a tidyverse approach 
 
