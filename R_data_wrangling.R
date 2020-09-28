@@ -1,7 +1,7 @@
 # R data wrangling with dplyr, tidyr, readr, and more
 # 
 # Ryan Womack, rwomack@rutgers.edu
-# 2019-10-09 version
+# 2020-09-28 version
 
 # install packages
 install.packages("tidyverse")
