@@ -160,6 +160,9 @@ mtcars_nested$model
 gender_data2017wide <- gender_data2017wide %>%
   mutate(gdp_ratio = (`GDP per capita (Current US$)`/10000)/`Fertility rate, total (births per woman)`)
 
+#return of drop_na
+gender_data2017wide <- drop_na(gender_data2017wide, gdp_ratio)
+
 plot(gender_data2017wide$gdp_ratio)
 
 gender_data2017wide <- gender_data2017wide %>%
@@ -279,7 +282,7 @@ regressions <- gender_data2017wide %>%
   group_by(hi_ratio) %>%
   nest() %>% 
   mutate(
-    fit = map(data, ~ lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, data=.x)),
+    fit = map(data, ~ lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, data=.x,)),
     tidied = map(fit, tidy),
     glanced = map(fit, glance),
     augmented = map(fit, augment)
