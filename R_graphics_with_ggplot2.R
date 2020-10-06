@@ -216,6 +216,9 @@ lastdensity + theme_cowplot() + scale_fill_brewer(palette = "Dark2") + scale_col
 lastdensity + theme_tufte() + scale_fill_brewer(palette = "Set3") + scale_color_brewer(palette = "Set3")
 
 
+# ggvis is now "dormant", so these examples will not work 
+# unless you install older helper packages
+
 #ggvis
 mtcars %>%
   ggvis(~wt, ~mpg) %>%
@@ -252,5 +255,5 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
 
 # for more information see
 # ggplot docs at https://ggplot2.tidyverse.org/
-# ggplot extensions at https://www.ggplot2-exts.org/
+# ggplot extensions at https://exts.ggplot2.tidyverse.org/
 # ggplot2 book (via link.springer.com)
