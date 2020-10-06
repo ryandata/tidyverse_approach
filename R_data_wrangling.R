@@ -65,6 +65,9 @@ mydata<-read_excel("mydata.xlsx", 1)
 # you’ll need to pair DBI with a specific backend 
 # like RSQLite, RPostgres, or odbc. Learn more at https://db.rstudio.com.
 
+# rclone
+# for working with cloud sites like AWS
+
 # tibble
 # https://tibble.tidyverse.org/
 # the tibble is a "better-behaved" data.frame, at least in some ways
@@ -91,8 +94,8 @@ as_tibble(iris)
 
 # The goal of tidyr is to help you create tidy data. Tidy data is data where:
   
-# Every column is variable.
-# Every row is an observation..
+# Every column is a variable.
+# Every row is an observation.
 # Every cell is a single value.
 
 # load data - gender_stats - see R_for_Data_Analysis.R for details
@@ -100,10 +103,15 @@ download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip
 unzip("gender.zip")
 gender_data <- read_csv("Gender_StatsData.csv")
 gender_data <- gender_data[,c(-2,-4)]
+gender_data <- gender_data[,1:63]
+
+# if you need to reduce the size of the data (for example, for RStudio Cloud)
+# try this
+# gender_data <- gender_data[1:10000,]
 
 # pivot_longer 
 # to create long format data
-gender_data2 <- pivot_longer(gender_data, 3:62, names_to = "Year", values_to = "Value")
+gender_data2 <- pivot_longer(gender_data, 3:63, names_to = "Year", values_to = "Value")
 
 # the "pipe"
 # magrittr provides the pipe, %>% used throughout the tidyverse
@@ -111,6 +119,7 @@ gender_data2 <- pivot_longer(gender_data, 3:62, names_to = "Year", values_to = "
 gender_data2017 <-
   gender_data2 %>%
   filter(Year=="2017")
+
 gender_data2017 <- gender_data2017[,-3]
 
 # pivot_wider 
@@ -136,6 +145,9 @@ mtcars_nested <- mtcars %>%
   nest()
 
 mtcars_nested
+
+# peek at column 2, row 1 in detail
+mtcars_nested[[2]][[1]]
 
 mtcars_nested <- mtcars_nested %>% 
   mutate(model = map(data, function(df) lm(mpg ~ wt, data = df)))
@@ -190,7 +202,7 @@ write_csv(gender_data2017filtered, "gender_filtered.csv")
 # summarise() reduces multiple values down to a single summary.
 
 gender_data2017wide %>%
-  summarise(mean = mean(gdp_ratio, na.rm=TRUE), n = n())
+  summarise(mean = mean(gdp_ratio), n = n())
 
 # Usually, you'll want to group first
 gender_data2017wide %>%
