@@ -1,4 +1,4 @@
-# https://www.showmeshiny.com/
+
 # dynamically generated user interface text
 # https://shiny.rstudio.com/gallery/dynamic-ui.html
 
