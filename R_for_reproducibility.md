@@ -1,8 +1,8 @@
 ## R for reproducible scientific documents: knitr, rmarkdown, and beyond
 ## Ryan Womack, rwomack@rutgers.edu
-## 2019-10-30 version
+## 2020-10-13 version
 
-###  What is reproduciblity?
+###  What is reproducibility?
 
 ####  Credibility in Science 
 
@@ -49,7 +49,7 @@ In R, literate programming can be achieved with LaTeX + [Sweave](https://stat.et
 - Open source is an important enabler of reproducibility
 - Anyone can grab copies of the software to execute
 - And can get older versions if necessary for compatibility
-- You can also record information about your computing environment (session.Info() in R)
+- You can also record information about your computing environment (sessionInfo() in R)
 - The **checkpoint** and **packrat** packages automate this process in R
 - snapshots from [MRAN](<https://mran.microsoft.com/timemachine>)
 - see also <https://rviews.rstudio.com/2018/01/18/package-management-for-reproducible-r-code/>
