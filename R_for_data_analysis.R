@@ -53,7 +53,7 @@ download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip
 unzip("gender.zip")
 
 # this is the base R read command
-# gender_data<-read.csv("Gender_StatsData.csv")
+gender_data<-read.csv("Gender_StatsData.csv")
 # from tidyverse, read_csv is a simpler alternative
 gender_data <- read_csv("Gender_StatsData.csv")
 
@@ -92,7 +92,7 @@ gender_data2017 <-
   gender_data2 %>%
   filter(Year=="2017")
 
-gender_data2017 <- gender_data2017[,-3]
+gender_data2017 <- gender_data2017[,c(-3,-4)]
 
 gender_data2017wide <- 
   gender_data2017 %>%
