@@ -1,7 +1,7 @@
 # R data wrangling with dplyr, tidyr, readr, and more
 # 
 # Ryan Womack, rwomack@rutgers.edu
-# 2020-09-28 version
+# 2021-02-23 version
 
 # install packages
 install.packages("tidyverse")
@@ -312,3 +312,4 @@ regressions %>%
 # For a more complete introduction, consult
 # R for Data Science
 # https://r4ds.had.co.nz/
+
