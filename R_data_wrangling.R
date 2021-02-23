@@ -41,6 +41,7 @@ mydata<-read_excel("mydata.xlsx", 1)
 
 # haven 
 # for SPSS, Stata, and SAS data.
+# "foreign" is the traditional R package for these formats
 
 # googledrive 
 # allows you to interact with files on Google Drive from R.
@@ -116,7 +117,7 @@ gender_data2 <- pivot_longer(gender_data, 3:63, names_to = "Year", values_to = "
 # the "pipe"
 # magrittr provides the pipe, %>% used throughout the tidyverse
 
-gender_data2017 <-
+gender_data2017 <- 
   gender_data2 %>%
   filter(Year=="2017")
 
@@ -140,7 +141,8 @@ gender_data_complete <-
   complete()
 
 # nested models
-mtcars_nested <- mtcars %>% 
+mtcars_nested <- 
+  mtcars %>% 
   group_by(cyl) %>% 
   nest()
 
@@ -149,7 +151,8 @@ mtcars_nested
 # peek at column 2, row 1 in detail
 mtcars_nested[[2]][[1]]
 
-mtcars_nested <- mtcars_nested %>% 
+mtcars_nested <- 
+  mtcars_nested %>% 
   mutate(model = map(data, function(df) lm(mpg ~ wt, data = df)))
 mtcars_nested
 mtcars_nested$model
@@ -169,15 +172,18 @@ mtcars_nested$model
   
 # mutate() adds new variables that are functions of existing variables
 
-gender_data2017wide <- gender_data2017wide %>%
+gender_data2017wide <- 
+  gender_data2017wide %>%
   mutate(gdp_ratio = (`GDP per capita (Current US$)`/10000)/`Fertility rate, total (births per woman)`)
 
 #return of drop_na
-gender_data2017wide <- drop_na(gender_data2017wide, gdp_ratio)
+gender_data2017wide <- 
+  drop_na(gender_data2017wide, gdp_ratio)
 
 plot(gender_data2017wide$gdp_ratio)
 
-gender_data2017wide <- gender_data2017wide %>%
+gender_data2017wide <- 
+  gender_data2017wide %>%
   mutate(hi_ratio = gdp_ratio>0.78)
 
 attach(gender_data2017wide)
@@ -202,7 +208,7 @@ write_csv(gender_data2017filtered, "gender_filtered.csv")
 # summarise() reduces multiple values down to a single summary.
 
 gender_data2017wide %>%
-  summarise(mean = mean(gdp_ratio), n = n())
+  summarise(mean = mean(gdp_ratio), n = n(), median = sqrt(median(gdp_ratio)))
 
 # Usually, you'll want to group first
 gender_data2017wide %>%
