@@ -21,6 +21,7 @@ Good data management is essential for reproducibility
 - Document your variables and data collection as well as anything you yourself would forget when revisiting the project 3 years later in response to a query, as a codebook, data dictionary, or readme.
 - Don't work in Excel [if you can] or other manual editing environment for manipulating data
 - can create a standardized project directory structure with [ProjectTemplate](http://projecttemplate.net/) package
+
 See [Data Management guide](https://libguides.rutgers.edu/datamanagement) for more details.
 
 ### Literate Programming
