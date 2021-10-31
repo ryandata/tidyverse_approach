@@ -12,7 +12,7 @@
 
 **Reproducibility** typically focuses on the computational aspects of data+code = results
 
-[*Science* on Replication and Reproducibility](http://www.sciencemag.org/content/334/6060.toc)
+[*Science* on Replication and Reproducibility](https://www.science.org/toc/science/334/6060)
 
 ### Data Management
 
