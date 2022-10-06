@@ -1,7 +1,7 @@
 # R for Data Analysis
 # A tidyverse approach
 # Ryan Womack, rwomack@rutgers.edu
-# 2021-02-09 version
+# 2022-10-06 version
 
 # let's look at a few preliminaries before analyzing the data
 
@@ -49,6 +49,8 @@ library(help=tidyverse)
 
 # grab data
 # the is the World Bank Gender Statstics database
+getOption("timeout")
+options(timeout=6000)
 download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip", "gender.zip")
 unzip("gender.zip")
 
@@ -66,6 +68,8 @@ gender_data[1:10,-1]
 names(gender_data)
 gender_data <- gender_data[,c(-2,-4)]
 names(gender_data)
+gender_data <- gender_data[,-65]
+names(gender_data)
 
 # from tidyr
 # gather and spread used to be the commands to generate long or wide data
@@ -79,27 +83,27 @@ names(gender_data)
 # gender_data<-gender_data[1:3000,]
 
 # create data in long form
-gender_data2 <- pivot_longer(gender_data, 3:62, names_to = "Year", values_to = "Value")
+gender_data2 <- pivot_longer(gender_data, 3:64, names_to = "Year", values_to = "Value")
 
 # alternative with pipes is below
 
 # gender_data3 <- 
 #   gender_data %>%
-#   pivot_longer(3:62, names_to = "Year", values_to = "Value")
+#   pivot_longer(3:64, names_to = "Year", values_to = "Value")
 
 #filter
-gender_data2017 <-
+gender_data2020 <-
   gender_data2 %>%
-  filter(Year=="2017")
+  filter(Year=="2020")
 
-gender_data2017 <- gender_data2017[,c(-3,-4)]
+gender_data2020 <- gender_data2020[,-3]
 
-gender_data2017wide <- 
-  gender_data2017 %>%
+gender_data2020wide <- 
+  gender_data2020 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
 
 # if we wanted to write output, we use a write function like write.csv
-# write.csv(gender_data2017wide,"genderout.csv")
+# write.csv(gender_data2020wide,"genderout.csv")
 
 
 # now that we have created the dataset
@@ -107,11 +111,11 @@ gender_data2017wide <-
 # get information about data with summary
 ls()
 summary(gender_data)
-summary(gender_data2017)
-summary(gender_data2017wide)
+summary(gender_data2020)
+summary(gender_data2020wide)
 
 # summarise is the tidyverse way, from dplyr
-gender_data2017wide %>%
+gender_data2020wide %>%
   summarise_if(is.numeric, mean, na.rm=TRUE)
 
 # ls lists items in the workspace, while rm removes them
@@ -120,11 +124,11 @@ gender_data2017wide %>%
 
 
 # studying the life expectancy variable
-mean(gender_data2017wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
-summary(gender_data2017wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
+mean(gender_data2020wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
+summary(gender_data2020wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
 
 # attaching data
-attach(gender_data2017wide)
+attach(gender_data2020wide)
 mean(`Life expectancy at birth, female (years)`, na.rm=TRUE)
 mean(`Life expectancy at birth, male (years)`, na.rm=TRUE)
 summary(`Life expectancy at birth, female (years)`, na.rm=TRUE)
@@ -157,11 +161,11 @@ hist(lifespread)
 table(`Country Name`)
 
 # we can create categorical variables
-gender_data2017wide$hi_spread <- lifespread>5
-gender_data2017wide$hi_age <- `Life expectancy at birth, female (years)`>78
+gender_data2020wide$hi_spread <- lifespread>5
+gender_data2020wide$hi_age <- `Life expectancy at birth, female (years)`>78
 
 # reattaching the data to make the freshly computed variables available 
-attach(gender_data2017wide)
+attach(gender_data2020wide)
 
 # table and cross-tab on the categorical data
 table(hi_spread)
