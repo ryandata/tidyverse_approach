@@ -1,7 +1,7 @@
 # R data wrangling with dplyr, tidyr, readr, and more
 # 
 # Ryan Womack, rwomack@rutgers.edu
-# 2021-02-23 version
+# 2022-10-19 version
 
 # install packages
 install.packages("tidyverse")
@@ -100,11 +100,17 @@ as_tibble(iris)
 # Every cell is a single value.
 
 # load data - gender_stats - see R_for_Data_Analysis.R for details
+getOption("timeout")
+options(timeout=6000)
 download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip", "gender.zip")
 unzip("gender.zip")
+
 gender_data <- read_csv("Gender_StatsData.csv")
+names(gender_data)
 gender_data <- gender_data[,c(-2,-4)]
-gender_data <- gender_data[,1:63]
+names(gender_data)
+gender_data <- gender_data[,-65]
+names(gender_data)
 
 # if you need to reduce the size of the data (for example, for RStudio Cloud)
 # try this
@@ -112,33 +118,35 @@ gender_data <- gender_data[,1:63]
 
 # pivot_longer 
 # to create long format data
-gender_data2 <- pivot_longer(gender_data, 3:63, names_to = "Year", values_to = "Value")
 
+gender_data2 <- 
+   gender_data %>%
+   pivot_longer(3:64, names_to = "Year", values_to = "Value")
 # the "pipe"
 # magrittr provides the pipe, %>% used throughout the tidyverse
 
-gender_data2017 <- 
+gender_data2020 <- 
   gender_data2 %>%
-  filter(Year=="2017")
+  filter(Year=="2020")
 
-gender_data2017 <- gender_data2017[,-3]
+gender_data2020 <- gender_data2020[,-3]
 
 # pivot_wider 
 # to create wide format data
-gender_data2017wide <- 
-  gender_data2017 %>%
+gender_data2020wide <- 
+  gender_data2020 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
 
 # drop_na()
 gender_data_drop_na <-
-    gender_data2017wide %>%
+    gender_data2020wide %>%
     drop_na()
 # be careful - here that dropped ALL cases
 
-# complete()
+# complete() - powerful, but be careful
 gender_data_complete <-
-  gender_data2017wide %>%
-  complete()
+  gender_data2020wide %>%
+  complete(fill=list(`A woman can apply for a passport in the same way as a man (1=yes; 0=no)`=0))
 
 # nested models
 mtcars_nested <- 
@@ -172,46 +180,46 @@ mtcars_nested$model
   
 # mutate() adds new variables that are functions of existing variables
 
-gender_data2017wide <- 
-  gender_data2017wide %>%
+gender_data2020wide <- 
+  gender_data2020wide %>%
   mutate(gdp_ratio = (`GDP per capita (Current US$)`/10000)/`Fertility rate, total (births per woman)`)
 
 #return of drop_na
-gender_data2017wide <- 
-  drop_na(gender_data2017wide, gdp_ratio)
+gender_data2020wide <- 
+  drop_na(gender_data2020wide, gdp_ratio)
 
-plot(gender_data2017wide$gdp_ratio)
+plot(gender_data2020wide$gdp_ratio)
 
-gender_data2017wide <- 
-  gender_data2017wide %>%
+gender_data2020wide <- 
+  gender_data2020wide %>%
   mutate(hi_ratio = gdp_ratio>0.78)
 
-attach(gender_data2017wide)
+attach(gender_data2020wide)
 
 # select() picks variables based on their names.
 
 gender_gdp <-
-  select(gender_data2017wide, c(`Country Name`,starts_with("GDP")))
+  select(gender_data2020wide, c(`Country Name`,starts_with("GDP")))
 
 gender_gdp
 write_csv(gender_gdp, "gender_gdp.csv")
 
 # filter() picks cases based on their values.
 
-gender_data2017filtered <-
-  gender_data2017wide %>%
+gender_data2020filtered <-
+  gender_data2020wide %>%
   filter(gdp_ratio>2)
 
-gender_data2017filtered
-write_csv(gender_data2017filtered, "gender_filtered.csv")
+gender_data2020filtered
+write_csv(gender_data2020filtered, "gender_filtered.csv")
 
 # summarise() reduces multiple values down to a single summary.
 
-gender_data2017wide %>%
+gender_data2020wide %>%
   summarise(mean = mean(gdp_ratio), n = n(), median = sqrt(median(gdp_ratio)))
 
 # Usually, you'll want to group first
-gender_data2017wide %>%
+gender_data2020wide %>%
   group_by(hi_ratio) %>%
   summarise(mean = mean(gdp_ratio, na.rm=TRUE), n = n())
 
@@ -289,14 +297,19 @@ mtcars %>%
 
 library(broom)
 
-regoutput<-lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, gender_data2017wide)
+regoutput<-lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, gender_data2020wide)
+
+# base R regression summary
+summary(regoutput)
+
+# broom variants
 tidy(regoutput)
 glance(regoutput)
 augment(regoutput)
 
 # a grouped example
 
-regressions <- gender_data2017wide %>%
+regressions <- gender_data2020wide %>%
   group_by(hi_ratio) %>%
   nest() %>% 
   mutate(
@@ -318,4 +331,3 @@ regressions %>%
 # For a more complete introduction, consult
 # R for Data Science
 # https://r4ds.had.co.nz/
-

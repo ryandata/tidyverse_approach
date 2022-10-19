@@ -26,6 +26,7 @@ funkyadd(2,2)
 sample(1:100,10)
 rnorm(10)
 rnorm(10, mean=100, sd=20)
+rnorm(5, mean=1000, sd=20)
 
 # the R help system is easy to access
 ?sample
@@ -48,7 +49,7 @@ library(help=tidyverse)
 # also see https://tidyverse.org for complete documentation
 
 # grab data
-# the is the World Bank Gender Statstics database
+# the is the World Bank Gender Statistics database
 getOption("timeout")
 options(timeout=6000)
 download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip", "gender.zip")
