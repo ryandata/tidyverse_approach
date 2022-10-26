@@ -1,6 +1,6 @@
 ## R for reproducible scientific documents: knitr, rmarkdown, and beyond
 ## Ryan Womack, rwomack@rutgers.edu
-## 2021-10-30 version
+## 2022-10-26 version
 
 ###  What is reproducibility?
 
@@ -55,7 +55,7 @@ In R, literate programming can be achieved with LaTeX + [Sweave](https://stat.et
 - The **checkpoint** and **packrat** packages automate this process in R
 - snapshots from [MRAN](<https://mran.microsoft.com/timemachine>)
 - see also <https://rviews.rstudio.com/2018/01/18/package-management-for-reproducible-r-code/>
-- Reprozip, Docker, and Singularity are more comprehensive solutions, not R specific, to containerized environments
+- Reprozip, Docker, and Apptainer (formerly Singularity) are more comprehensive solutions, not R specific, to containerized environments
 
 ### Creating packages for collaboration
 
