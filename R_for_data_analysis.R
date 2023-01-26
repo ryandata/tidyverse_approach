@@ -1,7 +1,7 @@
 # R for Data Analysis
 # A tidyverse approach
 # Ryan Womack, rwomack@rutgers.edu
-# 2022-10-06 version
+# 2023-01-26 version
 
 # let's look at a few preliminaries before analyzing the data
 
@@ -50,9 +50,11 @@ library(help=tidyverse)
 
 # grab data
 # the is the World Bank Gender Statistics database
+# see https://genderdata.worldbank.org for background
+
 getOption("timeout")
 options(timeout=6000)
-download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip", "gender.zip")
+download.file("https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip", "gender.zip")
 unzip("gender.zip")
 
 # this is the base R read command
@@ -230,4 +232,6 @@ cor.test(lifespread,`Fertility rate, total (births per woman)`)
 
 # we can also easily pull up regression diagnostic plots
 plot(regoutput, pch=3)
+
+# to be continued in parts 2 (data visualization) and 3 (data manipulation/wrangling)
 
