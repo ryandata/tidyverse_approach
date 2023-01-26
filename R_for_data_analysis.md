@@ -19,14 +19,14 @@ The large user base has also generated tons of guides, online tutorials, and hel
 
 Due to its open nature, R is constantly developing and expanding in capability.  Also, because it is freely available to anyone worldwide for any use, projects in R can be assured of an audience and the potential for use and collaboration is unrestricted.
 
-## What is RStudio?
-<https://rstudio.com>
+## What is Posit(RStudio)?
+<https://posit.co>
 
-Rstudio is the leading company in the R space, contributing to many packages and tools that have become de facto standards.  They also produce the Rstudio Desktop and Server development environments, as well as Shiny.
+Formerly known as Rstudio, Posit is the leading company in the R space, contributing to many packages and tools that have become de facto standards.  They also produce the Rstudio Desktop and Server development environments, as well as Shiny.
 
-## Why RStudio?
+## Why RStudio Desktop?
 
-Rstudio has in some ways tamed the chaos of the R landscape, although there are tradeoffs involved.  The RStudio development environment is clear, powerful, easy-to-use, and a fast and effective way to get productive in R.  It is also standardized across all platforms (Linux, Server, Mac, Windows).
+Rstudio Desktop, as a development environment, has in some ways tamed the chaos of the R landscape, although there are tradeoffs involved.  The RStudio development environment using RStudio Desktop (or server versions) is clear, powerful, easy-to-use, and a fast and effective way to get productive in R.  It is also standardized across all platforms (Linux, Server, Mac, Windows).
 
 ## What is the tidyverse?
 <https://www.tidyverse.org>
@@ -39,8 +39,14 @@ Some of the tidyverse packages, such as ggplot2 and dplyr, are clear leaders in 
 
 However, they are "opinionated" in the sense that their conventions may differ from many long-standing "classic" R packages.  Users should be aware that there is also a whole universe of non-tidyverse approaches to choose from.
 
+## R is open, your choice
+
+As open source software, there are many other ways to "do R",  Base R in combination with other packages can accomplish the same tasks that the RStudio/tidyverse versions can.  There are also other development environments for R, or one can simply edit R code in a text editor.  Sophisticated editors such as Emacs can edit and interact with live R sessions at the same time.
+
 ## What about those packages?
 
-You can discover packages by searching on [Crantastic](https://crantastic.org) or read about curated collections of important packages on [CRAN Task Views](https://cran.r-project.org/web/views/).
+You can discover packages from the full [CRAN list](https://cran.r-project.org/web/packages/available_packages_by_name.html) or read about curated collections of important packages on [CRAN Task Views](https://cran.r-project.org/web/views/).
+
+But for the purposes of these workshops, we will ignore much of the richness and complexity of the R environment and stick with the tidyverse.
   
 ## Enjoy R!
