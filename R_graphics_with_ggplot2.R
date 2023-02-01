@@ -1,7 +1,7 @@
 # R graphics with ggplot2
 # 
 # Ryan Womack, rwomack@rutgers.edu
-# 2020-09-22 version
+# 2023-02-01 version
 
 # we will need the tidyverse again
 install.packages("tidyverse")
@@ -134,12 +134,12 @@ ggplot(diamonds, aes(x=carat,y=price)) + xlim(0,3) + geom_point(colour="steelblu
 dev.off()
 
 jpeg(file="output.jpg", width = 800, height = 600, quality=100)
-ggplot(diamonds, aes(depth))+geom_histogram(aes(fill = ..count..))
+ggplot(diamonds, aes(depth))+geom_histogram(aes(fill = after_stat(count)))
 dev.off()
 
 # histogram
 ggplot(diamonds, aes(depth))+geom_histogram()
-ggplot(diamonds, aes(depth))+geom_histogram(aes(fill = ..count..))
+ggplot(diamonds, aes(depth))+geom_histogram(aes(fill = after_stat(count)))
 
 # theme tweaks
 ggplot(diamonds, aes(clarity)) +facet_grid(.~cut) + geom_bar(position="dodge", fill="purple")+theme(panel.background = element_rect(fill='pink', colour='green'))
@@ -214,10 +214,6 @@ lastplot + theme_tufte() + scale_color_brewer(palette = "Set3")
 lastdensity <-ggplot(diamonds, aes(x=carat, fill=clarity, color=clarity)) + geom_density(alpha=0.3, aes(y=..scaled..)) 
 lastdensity + theme_cowplot() + scale_fill_brewer(palette = "Dark2") + scale_color_brewer(palette = "Dark2")
 lastdensity + theme_tufte() + scale_fill_brewer(palette = "Set3") + scale_color_brewer(palette = "Set3")
-
-
-# ggvis is now "dormant", so these examples will not work 
-# unless you install older helper packages
 
 #ggvis
 mtcars %>%
