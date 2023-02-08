@@ -1,7 +1,7 @@
 # R data wrangling with dplyr, tidyr, readr, and more
 # 
 # Ryan Womack, rwomack@rutgers.edu
-# 2022-10-19 version
+# 2023-02-08 version
 
 # install packages
 install.packages("tidyverse")
@@ -36,6 +36,8 @@ library(readxl)
 
 download.file("https://ryanwomack.com/data/mydata.xlsx", "mydata.xlsx")
 mydata<-read_excel("mydata.xlsx", 1)
+mydata
+
 # read_excel command also imports .xls files
 # writexl package can export/save Excel files from R
 
@@ -102,7 +104,7 @@ as_tibble(iris)
 # load data - gender_stats - see R_for_Data_Analysis.R for details
 getOption("timeout")
 options(timeout=6000)
-download.file("https://databank.worldbank.org/data/download/Gender_Stats_csv.zip", "gender.zip")
+download.file("https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip", "gender.zip")
 unzip("gender.zip")
 
 gender_data <- read_csv("Gender_StatsData.csv")
