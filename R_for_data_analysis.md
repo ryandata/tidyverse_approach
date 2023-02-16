@@ -22,7 +22,7 @@ Due to its open nature, R is constantly developing and expanding in capability. 
 ## What is Posit(RStudio)?
 <https://posit.co>
 
-Formerly known as Rstudio, Posit is the leading company in the R space, contributing to many packages and tools that have become de facto standards.  They also produce the Rstudio Desktop and Server development environments, as well as Shiny.
+Formerly known as Rstudio, Posit is the leading company in the R space, contributing to many packages and tools that have become de facto standards.  They also produce the Rstudio Desktop and Server development environments, as well as Shiny. [Posit.cloud](https://posit.co/cloud) allows the use of RStudio in a remote environment, saving installation and configuration issues.
 
 ## Why RStudio Desktop?
 
