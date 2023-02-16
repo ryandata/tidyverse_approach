@@ -27,3 +27,5 @@ https://www.shinyapps.io/
 
 ## modularizing Shiny code
 https://shiny.rstudio.com/articles/modules.html
+
+Also, the shiny folder on this site contains some very basic code examples that may or may not be used during the session.
