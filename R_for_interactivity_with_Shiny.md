@@ -7,7 +7,7 @@ http://shiny.rstudio.com
 
 http://shiny.rstudio.com/gallery/
 
-## Explore ggplot2 with shiny
+## Explore ggplot2 with Shiny
 https://www.r-bloggers.com/2017/06/shiny-app-to-explore-ggplot2/
   
 ## This is an example with college scorecard data
