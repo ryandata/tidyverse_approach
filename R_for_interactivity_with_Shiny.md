@@ -22,6 +22,9 @@ http://shiny.rstudio.com/articles/reactivity-overview.html
 ## shinydashboard
 https://rstudio.github.io/shinydashboard/
 
+## also flexdashboard
+https://pkgs.rstudio.com/flexdashboard/
+
 ## publish to shinyapps.io
 https://www.shinyapps.io/
 
