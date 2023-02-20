@@ -53,7 +53,8 @@ In R, literate programming can be achieved with LaTeX + [Sweave](https://stat.et
 - And can get older versions if necessary for compatibility
 - You can also record information about your computing environment (sessionInfo() in R)
 - The **checkpoint** and **packrat** packages automate this process in R
-- snapshots from [MRAN](<https://mran.microsoft.com/timemachine>)
+- [MRAN](<https://mran.microsoft.com/timemachine>) is phasing out
+- recommending [miniCRAN](https://cran.r-project.org/web/packages/miniCRAN/index.html) instead. See ["Create a local R package repository using miniCRAN"](https://learn.microsoft.com/en-us/sql/machine-learning/package-management/create-a-local-package-repository-using-minicran?view=sql-server-ver16)
 - see also <https://rviews.rstudio.com/2018/01/18/package-management-for-reproducible-r-code/>
 - Reprozip, Docker, and Apptainer (formerly Singularity) are more comprehensive solutions, not R specific, to containerized environments
 
