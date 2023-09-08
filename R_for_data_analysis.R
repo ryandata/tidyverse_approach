@@ -71,7 +71,7 @@ gender_data[1:10,-1]
 names(gender_data)
 gender_data <- gender_data[,c(-2,-4)]
 names(gender_data)
-gender_data <- gender_data[,-65]
+gender_data <- gender_data[,-66]
 names(gender_data)
 
 # from tidyr
@@ -90,7 +90,7 @@ gender_data2 <- pivot_longer(gender_data, 3:64, names_to = "Year", values_to = "
 
 # alternative with pipes is below
 
-# gender_data3 <- 
+# gender_data3 <-
 #   gender_data %>%
 #   pivot_longer(3:64, names_to = "Year", values_to = "Value")
 
@@ -101,7 +101,7 @@ gender_data2020 <-
 
 gender_data2020 <- gender_data2020[,-3]
 
-gender_data2020wide <- 
+gender_data2020wide <-
   gender_data2020 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
 
@@ -141,7 +141,7 @@ summary(`Life expectancy at birth, male (years)`, na.rm=TRUE)
 plot(`Life expectancy at birth, female (years)`~`Life expectancy at birth, male (years)`)
 abline(0,1)
 
-# computing a new variable 
+# computing a new variable
 lifespread <- `Life expectancy at birth, female (years)` - `Life expectancy at birth, male (years)`
 mean(lifespread, na.rm=TRUE)
 summary(lifespread, na.rm=TRUE)
@@ -167,7 +167,7 @@ table(`Country Name`)
 gender_data2020wide$hi_spread <- lifespread>5
 gender_data2020wide$hi_age <- `Life expectancy at birth, female (years)`>78
 
-# reattaching the data to make the freshly computed variables available 
+# reattaching the data to make the freshly computed variables available
 attach(gender_data2020wide)
 
 # table and cross-tab on the categorical data
@@ -225,7 +225,7 @@ anova(regoutput)
 # correlation
 cor(lifespread,`Fertility rate, total (births per woman)`)
 cor(lifespread,`Fertility rate, total (births per woman)`, na.rm=TRUE)
-# why won't those first two work? 
+# why won't those first two work?
 # defaults and options of R commands are not very standardized
 cor(lifespread,`Fertility rate, total (births per woman)`, use="complete.obs")
 cor.test(lifespread,`Fertility rate, total (births per woman)`)
