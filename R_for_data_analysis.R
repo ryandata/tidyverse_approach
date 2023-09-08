@@ -1,7 +1,7 @@
 # R for Data Analysis
 # A tidyverse approach
 # Ryan Womack, rwomack@rutgers.edu
-# 2023-01-26 version
+# 2023-09-12 version
 
 # let's look at a few preliminaries before analyzing the data
 
@@ -95,14 +95,14 @@ gender_data2 <- pivot_longer(gender_data, 3:64, names_to = "Year", values_to = "
 #   pivot_longer(3:64, names_to = "Year", values_to = "Value")
 
 #filter
-gender_data2020 <-
+gender_data2021 <-
   gender_data2 %>%
-  filter(Year=="2020")
+  filter(Year=="2021")
 
-gender_data2020 <- gender_data2020[,-3]
+gender_data2021 <- gender_data2021[,-3]
 
-gender_data2020wide <-
-  gender_data2020 %>%
+gender_data2021wide <-
+  gender_data2021 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
 
 # if we wanted to write output, we use a write function like write.csv
@@ -114,11 +114,11 @@ gender_data2020wide <-
 # get information about data with summary
 ls()
 summary(gender_data)
-summary(gender_data2020)
-summary(gender_data2020wide)
+summary(gender_data2021)
+summary(gender_data2021wide)
 
 # summarise is the tidyverse way, from dplyr
-gender_data2020wide %>%
+gender_data2021wide %>%
   summarise_if(is.numeric, mean, na.rm=TRUE)
 
 # ls lists items in the workspace, while rm removes them
@@ -127,11 +127,11 @@ gender_data2020wide %>%
 
 
 # studying the life expectancy variable
-mean(gender_data2020wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
-summary(gender_data2020wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
+mean(gender_data2021wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
+summary(gender_data2021wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
 
 # attaching data
-attach(gender_data2020wide)
+attach(gender_data2021wide)
 mean(`Life expectancy at birth, female (years)`, na.rm=TRUE)
 mean(`Life expectancy at birth, male (years)`, na.rm=TRUE)
 summary(`Life expectancy at birth, female (years)`, na.rm=TRUE)
@@ -164,11 +164,11 @@ hist(lifespread)
 table(`Country Name`)
 
 # we can create categorical variables
-gender_data2020wide$hi_spread <- lifespread>5
-gender_data2020wide$hi_age <- `Life expectancy at birth, female (years)`>78
+gender_data2021wide$hi_spread <- lifespread>5
+gender_data2021wide$hi_age <- `Life expectancy at birth, female (years)`>78
 
 # reattaching the data to make the freshly computed variables available
-attach(gender_data2020wide)
+attach(gender_data2021wide)
 
 # table and cross-tab on the categorical data
 table(hi_spread)
@@ -234,4 +234,3 @@ cor.test(lifespread,`Fertility rate, total (births per woman)`)
 plot(regoutput, pch=3)
 
 # to be continued in parts 2 (data visualization) and 3 (data manipulation/wrangling)
-
