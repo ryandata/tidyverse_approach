@@ -66,7 +66,7 @@ mydata
 # for relational databases.
 # To connect to a specific database,
 # you’ll need to pair DBI with a specific backend
-# like RSQLite, RPostgres, or odbc. Learn more at https://db.rstudio.com.
+# like RSQLite, RPostgres, or odbc. Learn more at https://solutions.posit.co/connections/db/.
 
 # rclone
 # for working with cloud sites like AWS
@@ -114,7 +114,7 @@ names(gender_data)
 gender_data <- gender_data[,-66]
 names(gender_data)
 
-# if you need to reduce the size of the data (for example, for RStudio Cloud)
+# if you need to reduce the size of the data (for example, for Posit Cloud)
 # try this
 # gender_data <- gender_data[1:10000,]
 
@@ -123,7 +123,7 @@ names(gender_data)
 
 gender_data2 <-
    gender_data %>%
-   pivot_longer(3:64, names_to = "Year", values_to = "Value")
+   pivot_longer(3:65, names_to = "Year", values_to = "Value")
 # the "pipe"
 # magrittr provides the pipe, %>% used throughout the tidyverse
 
@@ -332,4 +332,4 @@ regressions %>%
 
 # For a more complete introduction, consult
 # R for Data Science
-# https://r4ds.had.co.nz/
+# https://r4ds.hadley.nz/
