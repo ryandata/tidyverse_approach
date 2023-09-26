@@ -1,5 +1,5 @@
 # R data wrangling with dplyr, tidyr, readr, and more
-# 
+#
 # Ryan Womack, rwomack@rutgers.edu
 # 2023-02-08 version
 
@@ -10,7 +10,7 @@ install.packages("tidyverse")
 library(tidyverse)
 
 # "base" tidyverse includes
-# ggplot2, which we've already seen 
+# ggplot2, which we've already seen
 # readr, purrr, forcats, stringr, dplyr, tibble, tidyr
 # which focus on data manipulation
 
@@ -41,11 +41,11 @@ mydata
 # read_excel command also imports .xls files
 # writexl package can export/save Excel files from R
 
-# haven 
+# haven
 # for SPSS, Stata, and SAS data.
 # "foreign" is the traditional R package for these formats
 
-# googledrive 
+# googledrive
 # allows you to interact with files on Google Drive from R.
 
 # the following are not in the tidyverse, but are useful
@@ -53,19 +53,19 @@ mydata
 # jsonlite
 # for JSON.
 
-# xml2 
+# xml2
 # for XML.
 
-# httr 
+# httr
 # for web APIs.
 
-# rvest 
+# rvest
 # for web scraping.
 
-# DBI 
-# for relational databases. 
-# To connect to a specific database, 
-# you’ll need to pair DBI with a specific backend 
+# DBI
+# for relational databases.
+# To connect to a specific database,
+# you’ll need to pair DBI with a specific backend
 # like RSQLite, RPostgres, or odbc. Learn more at https://db.rstudio.com.
 
 # rclone
@@ -96,7 +96,7 @@ as_tibble(iris)
 # https://tidyr.tidyverse.org
 
 # The goal of tidyr is to help you create tidy data. Tidy data is data where:
-  
+
 # Every column is a variable.
 # Every row is an observation.
 # Every cell is a single value.
@@ -111,49 +111,49 @@ gender_data <- read_csv("Gender_StatsData.csv")
 names(gender_data)
 gender_data <- gender_data[,c(-2,-4)]
 names(gender_data)
-gender_data <- gender_data[,-65]
+gender_data <- gender_data[,-66]
 names(gender_data)
 
 # if you need to reduce the size of the data (for example, for RStudio Cloud)
 # try this
 # gender_data <- gender_data[1:10000,]
 
-# pivot_longer 
+# pivot_longer
 # to create long format data
 
-gender_data2 <- 
+gender_data2 <-
    gender_data %>%
    pivot_longer(3:64, names_to = "Year", values_to = "Value")
 # the "pipe"
 # magrittr provides the pipe, %>% used throughout the tidyverse
 
-gender_data2020 <- 
+gender_data2021 <-
   gender_data2 %>%
-  filter(Year=="2020")
+  filter(Year=="2021")
 
-gender_data2020 <- gender_data2020[,-3]
+gender_data2021 <- gender_data2021[,-3]
 
-# pivot_wider 
+# pivot_wider
 # to create wide format data
-gender_data2020wide <- 
-  gender_data2020 %>%
+gender_data2021wide <-
+  gender_data2021 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
 
 # drop_na()
 gender_data_drop_na <-
-    gender_data2020wide %>%
+    gender_data2021wide %>%
     drop_na()
 # be careful - here that dropped ALL cases
 
 # complete() - powerful, but be careful
 gender_data_complete <-
-  gender_data2020wide %>%
+  gender_data2021wide %>%
   complete(fill=list(`A woman can apply for a passport in the same way as a man (1=yes; 0=no)`=0))
 
 # nested models
-mtcars_nested <- 
-  mtcars %>% 
-  group_by(cyl) %>% 
+mtcars_nested <-
+  mtcars %>%
+  group_by(cyl) %>%
   nest()
 
 mtcars_nested
@@ -161,13 +161,13 @@ mtcars_nested
 # peek at column 2, row 1 in detail
 mtcars_nested[[2]][[1]]
 
-mtcars_nested <- 
-  mtcars_nested %>% 
+mtcars_nested <-
+  mtcars_nested %>%
   mutate(model = map(data, function(df) lm(mpg ~ wt, data = df)))
 mtcars_nested
 mtcars_nested$model
 
-mtcars_nested <- mtcars_nested %>% 
+mtcars_nested <- mtcars_nested %>%
   mutate(model = map(model, predict))
 mtcars_nested$model
 
@@ -176,52 +176,52 @@ mtcars_nested$model
 # https://dplyr.tidyverse.org
 
 
-# dplyr is a grammar of data manipulation, 
-# providing a consistent set of verbs 
+# dplyr is a grammar of data manipulation,
+# providing a consistent set of verbs
 # that help you solve the most common data manipulation challenges:
-  
+
 # mutate() adds new variables that are functions of existing variables
 
-gender_data2020wide <- 
-  gender_data2020wide %>%
+gender_data2021wide <-
+  gender_data2021wide %>%
   mutate(gdp_ratio = (`GDP per capita (Current US$)`/10000)/`Fertility rate, total (births per woman)`)
 
 #return of drop_na
-gender_data2020wide <- 
-  drop_na(gender_data2020wide, gdp_ratio)
+gender_data2021wide <-
+  drop_na(gender_data2021wide, gdp_ratio)
 
-plot(gender_data2020wide$gdp_ratio)
+plot(gender_data2021wide$gdp_ratio)
 
-gender_data2020wide <- 
-  gender_data2020wide %>%
+gender_data2021wide <-
+  gender_data2021wide %>%
   mutate(hi_ratio = gdp_ratio>0.78)
 
-attach(gender_data2020wide)
+attach(gender_data2021wide)
 
 # select() picks variables based on their names.
 
 gender_gdp <-
-  select(gender_data2020wide, c(`Country Name`,starts_with("GDP")))
+  select(gender_data2021wide, c(`Country Name`,starts_with("GDP")))
 
 gender_gdp
 write_csv(gender_gdp, "gender_gdp.csv")
 
 # filter() picks cases based on their values.
 
-gender_data2020filtered <-
-  gender_data2020wide %>%
+gender_data2021filtered <-
+  gender_data2021wide %>%
   filter(gdp_ratio>2)
 
-gender_data2020filtered
-write_csv(gender_data2020filtered, "gender_filtered.csv")
+gender_data2021filtered
+write_csv(gender_data2021filtered, "gender_filtered.csv")
 
 # summarise() reduces multiple values down to a single summary.
 
-gender_data2020wide %>%
+gender_data2021wide %>%
   summarise(mean = mean(gdp_ratio), n = n(), median = sqrt(median(gdp_ratio)))
 
 # Usually, you'll want to group first
-gender_data2020wide %>%
+gender_data2021wide %>%
   group_by(hi_ratio) %>%
   summarise(mean = mean(gdp_ratio, na.rm=TRUE), n = n())
 
@@ -232,47 +232,47 @@ gender_data2020wide %>%
 # arrange() changes the ordering of the rows.
 
 gender_gdp <-
-  gender_gdp %>% 
+  gender_gdp %>%
   arrange(desc(gdp_ratio))
 
 gender_gdp$gdp_ratio
 write_csv(gender_gdp, "gender_gdp.csv")
 
-# These all combine naturally with group_by() 
-# which allows you to perform any operation “by group”. 
-# You can learn more about them in vignette("dplyr"). 
-# As well as these single-table verbs, 
-# dplyr also provides a variety of two-table verbs, 
+# These all combine naturally with group_by()
+# which allows you to perform any operation “by group”.
+# You can learn more about them in vignette("dplyr").
+# As well as these single-table verbs,
+# dplyr also provides a variety of two-table verbs,
 # which you can learn about in vignette("two-table").
 
 # Wrangle
-# In addition to tidyr, and dplyr, 
-# there are five packages which are designed 
+# In addition to tidyr, and dplyr,
+# there are five packages which are designed
 # to work with specific types of data:
-  
-# lubridate 
+
+# lubridate
 # for dates and date-times.
 
-# hms 
+# hms
 # for time-of-day values.
 
-# blob 
+# blob
 # for storing blob (binary) data.
 
 # stringr
-# stringr provides a cohesive set of functions 
-# designed to make working with strings as easy as possible. 
+# stringr provides a cohesive set of functions
+# designed to make working with strings as easy as possible.
 
 # forcats
-# forcats provides a suite of useful tools 
-# that solve common problems with factors. 
-# R uses factors to handle categorical variables, 
+# forcats provides a suite of useful tools
+# that solve common problems with factors.
+# R uses factors to handle categorical variables,
 
 
 # Program
 
 # purrr
-# purrr enhances R’s functional programming (FP) toolkit 
+# purrr enhances R’s functional programming (FP) toolkit
 # by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive. Learn more ...
 # starting with "map" family of functions
 
@@ -282,24 +282,24 @@ mtcars %>%
   map(summary) %>%
   map_dbl("r.squared")
 
-# In addition to purrr, which provides very consistent and natural methods 
-# for iterating on R objects, there are two additional tidyverse packages 
+# In addition to purrr, which provides very consistent and natural methods
+# for iterating on R objects, there are two additional tidyverse packages
 # that help with general programming challenges:
-  
+
 # glue
-# glue provides an alternative to paste() 
+# glue provides an alternative to paste()
 # that makes it easier to combine data and strings.
 
 # broom
-# You may also find broom to be useful: 
-# it turns models into tidy data which you can then 
+# You may also find broom to be useful:
+# it turns models into tidy data which you can then
 # wrangle and visualise using the tools you already know.
 # tidy, glance, and augment
 # are the key functions
 
 library(broom)
 
-regoutput<-lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, gender_data2020wide)
+regoutput<-lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, gender_data2021wide)
 
 # base R regression summary
 summary(regoutput)
@@ -311,9 +311,9 @@ augment(regoutput)
 
 # a grouped example
 
-regressions <- gender_data2020wide %>%
+regressions <- gender_data2021wide %>%
   group_by(hi_ratio) %>%
-  nest() %>% 
+  nest() %>%
   mutate(
     fit = map(data, ~ lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, data=.x,)),
     tidied = map(fit, tidy),
@@ -321,13 +321,13 @@ regressions <- gender_data2020wide %>%
     augmented = map(fit, augment)
   )
 
-regressions %>% 
+regressions %>%
   unnest(tidied)
-  
-regressions %>% 
+
+regressions %>%
   unnest(glanced)
 
-regressions %>% 
+regressions %>%
   unnest(augmented)
 
 # For a more complete introduction, consult
