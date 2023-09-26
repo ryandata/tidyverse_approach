@@ -333,3 +333,7 @@ regressions %>%
 # For a more complete introduction, consult
 # R for Data Science
 # https://r4ds.hadley.nz/
+
+# also https://www.tidymodels.org/
+# "a collection of packages for modeling and machine learning using tidyverse principles"
+
