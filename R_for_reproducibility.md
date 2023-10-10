@@ -1,6 +1,6 @@
 ## R for reproducible scientific documents: knitr, rmarkdown, and beyond
 ## Ryan Womack, rwomack@rutgers.edu
-## 2022-10-26 version
+## 2023-10-10 version
 
 ###  What is reproducibility?
 
@@ -22,7 +22,7 @@ Good data management is essential for reproducibility
 - Don't work in Excel [if you can] or other manual editing environment for manipulating data
 - can create a standardized project directory structure with [ProjectTemplate](http://projecttemplate.net/) package
 
-See [Data Management guide](https://libguides.rutgers.edu/datamanagement) for more details.
+See [Science Data Management guide](https://libguides.rutgers.edu/grad_sciencedata) for more details.
 
 ### Literate Programming
 
@@ -53,8 +53,7 @@ In R, literate programming can be achieved with LaTeX + [Sweave](https://stat.et
 - And can get older versions if necessary for compatibility
 - You can also record information about your computing environment (sessionInfo() in R)
 - The **checkpoint** and **packrat** packages automate this process in R
-- [MRAN](<https://mran.microsoft.com/timemachine>) is phasing out
-- recommending [miniCRAN](https://cran.r-project.org/web/packages/miniCRAN/index.html) instead. See ["Create a local R package repository using miniCRAN"](https://learn.microsoft.com/en-us/sql/machine-learning/package-management/create-a-local-package-repository-using-minicran?view=sql-server-ver16)
+- [miniCRAN](https://cran.r-project.org/web/packages/miniCRAN/index.html). See ["Create a local R package repository using miniCRAN"](https://learn.microsoft.com/en-us/sql/machine-learning/package-management/create-a-local-package-repository-using-minicran?view=sql-server-ver16)
 - see also <https://rviews.rstudio.com/2018/01/18/package-management-for-reproducible-r-code/>
 - Reprozip, Docker, and Apptainer (formerly Singularity) are more comprehensive solutions, not R specific, to containerized environments
 
@@ -62,7 +61,7 @@ In R, literate programming can be achieved with LaTeX + [Sweave](https://stat.et
 
 - Data and code can be distributed through packages, start with the package.skeleton() command or use RStudio guidance
 - Packages can encapsulate data, analytical functions, and documentation
-- see also http://ismayc.github.io/ecots2k16/template_pkg/
+- see also [Creating a basic template package in R](http://ismayc.github.io/ecots2k16/template_pkg/)
 - and [*R Packages*](http://r-pkgs.had.co.nz/) by Hadley Wickham
 - notably the [**ropensci**](https://ropensci.org/) project has many packages for reproducibility and collaboration.
 
@@ -80,8 +79,8 @@ In R, literate programming can be achieved with LaTeX + [Sweave](https://stat.et
 For more info see the [CRAN Task View for Reproducible Research](https://cran.r-project.org/web/views/ReproducibleResearch.html)
 
 
-See [blogdown] (https://bookdown.org/yihui/blogdown/) and 
+See [blogdown](https://bookdown.org/yihui/blogdown/) and 
 
-[bookdown] (https://bookdown.org/home/)
+[bookdown](https://bookdown.org/home/)
 
 if you are interested in creating more long-form documents that can incorporate R code and analysis.
