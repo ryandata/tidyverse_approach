@@ -71,7 +71,7 @@ gender_data[1:10,-1]
 names(gender_data)
 gender_data <- gender_data[,c(-2,-4)]
 names(gender_data)
-gender_data <- gender_data[,-66]
+gender_data <- gender_data[,-67]
 names(gender_data)
 
 # from tidyr
