@@ -86,7 +86,7 @@ names(gender_data)
 # gender_data<-gender_data[1:3000,]
 
 # create data in long form
-gender_data2 <- pivot_longer(gender_data, 3:64, names_to = "Year", values_to = "Value")
+gender_data2 <- pivot_longer(gender_data, 3:65, names_to = "Year", values_to = "Value")
 
 # alternative with pipes is below
 
