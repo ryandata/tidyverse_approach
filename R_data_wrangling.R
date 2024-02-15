@@ -146,6 +146,7 @@ gender_data_drop_na <-
 # be careful - here that dropped ALL cases
 
 # complete() - powerful, but be careful
+# complete data does not necessarily imply data quality
 gender_data_complete <-
   gender_data2021wide %>%
   complete(fill=list(`A woman can apply for a passport in the same way as a man (1=yes; 0=no)`=0))
@@ -186,7 +187,7 @@ gender_data2021wide <-
   gender_data2021wide %>%
   mutate(gdp_ratio = (`GDP per capita (Current US$)`/10000)/`Fertility rate, total (births per woman)`)
 
-#return of drop_na
+#return of drop_na, only looking at one variable this time
 gender_data2021wide <-
   drop_na(gender_data2021wide, gdp_ratio)
 

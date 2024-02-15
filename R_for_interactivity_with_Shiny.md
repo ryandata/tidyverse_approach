@@ -1,6 +1,9 @@
 ## R for interactivity with Shiny
 ## Ryan Womack, rwomack@rutgers.edu
 ## 2023-10-02 version
+## This session was last presented 2024-03-05 and is deprecated
+## The [Data Topics](https://libguides.rutgers.edu/data_topics) "Data Visualization 2" workshop replaces this material in Fall 2024
+
 
 ## Let's start by looking at the basic documentation and gallery examples
 https://shiny.posit.co/
