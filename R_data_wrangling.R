@@ -1,7 +1,7 @@
 # R data wrangling with dplyr, tidyr, readr, and more
 #
 # Ryan Womack, rwomack@rutgers.edu
-# 2023-02-08 version
+# 2024-02-20 version
 
 # install packages
 install.packages("tidyverse")
@@ -138,6 +138,9 @@ gender_data2021 <- gender_data2021[,-3]
 gender_data2021wide <-
   gender_data2021 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
+
+# write this version of the data to a file
+write_csv(gender_data2021wide, "widedata.csv")
 
 # drop_na()
 gender_data_drop_na <-
@@ -337,4 +340,3 @@ regressions %>%
 
 # also https://www.tidymodels.org/
 # "a collection of packages for modeling and machine learning using tidyverse principles"
-
