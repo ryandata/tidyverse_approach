@@ -1,7 +1,7 @@
 # R for Data Analysis
 # A tidyverse approach
 # Ryan Womack, rwomack@rutgers.edu
-# 2024-01-29 version
+# 2024-09-05 version
 
 # let's look at a few preliminaries before analyzing the data
 
