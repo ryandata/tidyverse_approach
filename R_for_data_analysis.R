@@ -58,9 +58,9 @@ download.file("https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip
 unzip("gender.zip")
 
 # this is the base R read command
-gender_data<-read.csv("Gender_StatsData.csv")
+gender_data<-read.csv("Gender_StatsCSV.csv")
 # from tidyverse, read_csv is a simpler alternative
-gender_data <- read_csv("Gender_StatsData.csv")
+gender_data <- read_csv("Gender_StatsCSV.csv")
 
 # matrix notation [row,column]
 gender_data[1,1]
@@ -70,8 +70,6 @@ gender_data[1:10,-1]
 # drop columns
 names(gender_data)
 gender_data <- gender_data[,c(-2,-4)]
-names(gender_data)
-gender_data <- gender_data[,-66]
 names(gender_data)
 
 # from tidyr
@@ -86,7 +84,7 @@ names(gender_data)
 # gender_data<-gender_data[1:3000,]
 
 # create data in long form
-gender_data2 <- pivot_longer(gender_data, 3:65, names_to = "Year", values_to = "Value")
+gender_data2 <- pivot_longer(gender_data, 3:66, names_to = "Year", values_to = "Value")
 
 # alternative with pipes is below
 
@@ -95,14 +93,14 @@ gender_data2 <- pivot_longer(gender_data, 3:65, names_to = "Year", values_to = "
 #   pivot_longer(3:64, names_to = "Year", values_to = "Value")
 
 #filter
-gender_data2021 <-
+gender_data2022 <-
   gender_data2 %>%
-  filter(Year=="2021")
+  filter(Year=="2022")
 
-gender_data2021 <- gender_data2021[,-3]
+gender_data2022 <- gender_data2022[,-3]
 
-gender_data2021wide <-
-  gender_data2021 %>%
+gender_data2022wide <-
+  gender_data2022 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
 
 # if we wanted to write output, we use a write function like write.csv
@@ -114,11 +112,11 @@ gender_data2021wide <-
 # get information about data with summary
 ls()
 summary(gender_data)
-summary(gender_data2021)
-summary(gender_data2021wide)
+summary(gender_data2022)
+summary(gender_data2022wide)
 
 # summarise is the tidyverse way, from dplyr
-gender_data2021wide %>%
+gender_data2022wide %>%
   summarise_if(is.numeric, mean, na.rm=TRUE)
 
 # ls lists items in the workspace, while rm removes them
@@ -127,11 +125,11 @@ gender_data2021wide %>%
 
 
 # studying the life expectancy variable
-mean(gender_data2021wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
-summary(gender_data2021wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
+mean(gender_data2022wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
+summary(gender_data2022wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
 
 # attaching data
-attach(gender_data2021wide)
+attach(gender_data2022wide)
 mean(`Life expectancy at birth, female (years)`, na.rm=TRUE)
 mean(`Life expectancy at birth, male (years)`, na.rm=TRUE)
 summary(`Life expectancy at birth, female (years)`, na.rm=TRUE)
@@ -164,11 +162,11 @@ hist(lifespread)
 table(`Country Name`)
 
 # we can create categorical variables
-gender_data2021wide$hi_spread <- lifespread>5
-gender_data2021wide$hi_age <- `Life expectancy at birth, female (years)`>78
+gender_data2022wide$hi_spread <- lifespread>5
+gender_data2022wide$hi_age <- `Life expectancy at birth, female (years)`>78
 
 # reattaching the data to make the freshly computed variables available
-attach(gender_data2021wide)
+attach(gender_data2022wide)
 
 # table and cross-tab on the categorical data
 table(hi_spread)
