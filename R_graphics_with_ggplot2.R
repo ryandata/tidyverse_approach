@@ -37,6 +37,7 @@ library(tidyverse)
 library(grid)
 library(gridExtra)
 library(RColorBrewer)
+library(gifski)
 
 # Anscombe's quartet can help us see why data visualization is important
 # code from https://github.com/seandolinar/stats.seandolinar.com-Tutorials/blob/master/correlation-introduction.R
@@ -237,7 +238,7 @@ mtcars %>% ggvis(x = ~wt) %>%
 
 # gganimate
 
-ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
+p <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
   geom_point(alpha = 0.7, show.legend = FALSE) +
   scale_colour_manual(values = country_colors) +
   scale_size(range = c(2, 12)) +
@@ -248,6 +249,7 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
   transition_time(year) +
   ease_aes('linear')
 
+animate(p)
 
 # for more information see
 # ggplot docs at https://ggplot2.tidyverse.org/
