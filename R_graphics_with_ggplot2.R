@@ -1,7 +1,7 @@
 # R graphics with ggplot2
 # 
 # Ryan Womack, rwomack@rutgers.edu
-# 2023-02-01 version
+# 2024-09-25 version
 
 # we will need the tidyverse again
 install.packages("tidyverse")
