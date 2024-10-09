@@ -1,7 +1,7 @@
 # R data wrangling with dplyr, tidyr, readr, and more
 #
 # Ryan Womack, rwomack@rutgers.edu
-# 2024-02-20 version
+# 2024-10-09 version
 
 # install packages
 install.packages("tidyverse")
@@ -107,11 +107,9 @@ options(timeout=6000)
 download.file("https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip", "gender.zip")
 unzip("gender.zip")
 
-gender_data <- read_csv("Gender_StatsData.csv")
+gender_data <- read_csv("Gender_StatsCSV.csv")
 names(gender_data)
 gender_data <- gender_data[,c(-2,-4)]
-names(gender_data)
-gender_data <- gender_data[,-66]
 names(gender_data)
 
 # if you need to reduce the size of the data (for example, for Posit Cloud)
@@ -123,36 +121,36 @@ names(gender_data)
 
 gender_data2 <-
    gender_data %>%
-   pivot_longer(3:65, names_to = "Year", values_to = "Value")
+   pivot_longer(3:66, names_to = "Year", values_to = "Value")
 # the "pipe"
 # magrittr provides the pipe, %>% used throughout the tidyverse
 
-gender_data2021 <-
+gender_data2022 <-
   gender_data2 %>%
-  filter(Year=="2021")
+  filter(Year=="2022")
 
-gender_data2021 <- gender_data2021[,-3]
+gender_data2022 <- gender_data2022[,-3]
 
 # pivot_wider
 # to create wide format data
-gender_data2021wide <-
-  gender_data2021 %>%
+gender_data2022wide <-
+  gender_data2022 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
 
 # write this version of the data to a file
-write_csv(gender_data2021wide, "widedata.csv")
+write_csv(gender_data2022wide, "widedata.csv")
 
 # drop_na()
 gender_data_drop_na <-
-    gender_data2021wide %>%
+    gender_data2022wide %>%
     drop_na()
 # be careful - here that dropped ALL cases
 
 # complete() - powerful, but be careful
 # complete data does not necessarily imply data quality
 gender_data_complete <-
-  gender_data2021wide %>%
-  complete(fill=list(`A woman can apply for a passport in the same way as a man (1=yes; 0=no)`=0))
+  gender_data2022wide %>%
+  complete(fill=list(`A woman can apply for a passport in the same way as a man (1=yes; 0=no)`=mean(`A woman can apply for a passport in the same way as a man (1=yes; 0=no)`,na.rm=TRUE)))
 
 # nested models
 mtcars_nested <-
@@ -186,46 +184,46 @@ mtcars_nested$model
 
 # mutate() adds new variables that are functions of existing variables
 
-gender_data2021wide <-
-  gender_data2021wide %>%
+gender_data2022wide <-
+  gender_data2022wide %>%
   mutate(gdp_ratio = (`GDP per capita (Current US$)`/10000)/`Fertility rate, total (births per woman)`)
 
 #return of drop_na, only looking at one variable this time
-gender_data2021wide <-
-  drop_na(gender_data2021wide, gdp_ratio)
+gender_data2022wide <-
+  drop_na(gender_data2022wide, gdp_ratio)
 
-plot(gender_data2021wide$gdp_ratio)
+plot(gender_data2022wide$gdp_ratio)
 
-gender_data2021wide <-
-  gender_data2021wide %>%
+gender_data2022wide <-
+  gender_data2022wide %>%
   mutate(hi_ratio = gdp_ratio>0.78)
 
-attach(gender_data2021wide)
+attach(gender_data2022wide)
 
 # select() picks variables based on their names.
 
 gender_gdp <-
-  select(gender_data2021wide, c(`Country Name`,starts_with("GDP")))
+  select(gender_data2022wide, c(`Country Name`,starts_with("GDP")))
 
 gender_gdp
 write_csv(gender_gdp, "gender_gdp.csv")
 
 # filter() picks cases based on their values.
 
-gender_data2021filtered <-
-  gender_data2021wide %>%
+gender_data2022filtered <-
+  gender_data2022wide %>%
   filter(gdp_ratio>2)
 
-gender_data2021filtered
-write_csv(gender_data2021filtered, "gender_filtered.csv")
+gender_data2022filtered
+write_csv(gender_data2022filtered, "gender_filtered.csv")
 
 # summarise() reduces multiple values down to a single summary.
 
-gender_data2021wide %>%
-  summarise(mean = mean(gdp_ratio), n = n(), median = sqrt(median(gdp_ratio)))
+gender_data2022wide %>%
+  summarise(mean = mean(gdp_ratio), n = n(), median = median(gdp_ratio))
 
 # Usually, you'll want to group first
-gender_data2021wide %>%
+gender_data2022wide %>%
   group_by(hi_ratio) %>%
   summarise(mean = mean(gdp_ratio, na.rm=TRUE), n = n())
 
@@ -303,7 +301,7 @@ mtcars %>%
 
 library(broom)
 
-regoutput<-lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, gender_data2021wide)
+regoutput<-lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, gender_data2022wide)
 
 # base R regression summary
 summary(regoutput)
@@ -315,7 +313,7 @@ augment(regoutput)
 
 # a grouped example
 
-regressions <- gender_data2021wide %>%
+regressions <- gender_data2022wide %>%
   group_by(hi_ratio) %>%
   nest() %>%
   mutate(
@@ -334,7 +332,6 @@ regressions %>%
 regressions %>%
   unnest(augmented)
 
-# For a more complete introduction, consult
 # R for Data Science
 # https://r4ds.hadley.nz/
 
