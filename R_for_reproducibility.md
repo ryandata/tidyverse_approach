@@ -4,8 +4,6 @@
 ## This session was last presented 2025-04-24 and is deprecated
 ## The [Data Topics](https://ryanwomack.com/data_topics) "Data Publication 1" workshop replaces this material in Fall 2025
 
-last offered April 24, 2025
-
 ###  What is reproducibility?
 
 ####  Credibility in Science 
