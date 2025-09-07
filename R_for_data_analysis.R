@@ -88,7 +88,7 @@ names(gender_data)
 # gender_data<-gender_data[1:3000,]
 
 # create data in long form
-gender_data2 <- pivot_longer(gender_data, 3:66, names_to = "Year", values_to = "Value")
+gender_data2 <- pivot_longer(gender_data, 3:67, names_to = "Year", values_to = "Value")
 
 # alternative with pipes is below
 
@@ -97,14 +97,14 @@ gender_data2 <- pivot_longer(gender_data, 3:66, names_to = "Year", values_to = "
 #   pivot_longer(3:64, names_to = "Year", values_to = "Value")
 
 #filter
-gender_data2022 <-
+gender_data2023 <-
   gender_data2 %>%
-  filter(Year=="2022")
+  filter(Year=="2023")
 
-gender_data2022 <- gender_data2022[,-3]
+gender_data2023 <- gender_data2023[,-3]
 
-gender_data2022wide <-
-  gender_data2022 %>%
+gender_data2023wide <-
+  gender_data2023 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
 
 # if we wanted to write output, we use a write function like write.csv
@@ -116,11 +116,11 @@ gender_data2022wide <-
 # get information about data with summary
 ls()
 summary(gender_data)
-summary(gender_data2022)
-summary(gender_data2022wide)
+summary(gender_data2023)
+summary(gender_data2023wide)
 
 # summarise is the tidyverse way, from dplyr
-gender_data2022wide %>%
+gender_data2023wide %>%
   summarise_if(is.numeric, mean, na.rm=TRUE)
 
 # ls lists items in the workspace, while rm removes them
@@ -129,11 +129,11 @@ gender_data2022wide %>%
 
 
 # studying the life expectancy variable
-mean(gender_data2022wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
-summary(gender_data2022wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
+mean(gender_data2023wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
+summary(gender_data2023wide$`Life expectancy at birth, female (years)`, na.rm=TRUE)
 
 # attaching data
-attach(gender_data2022wide)
+attach(gender_data2023wide)
 mean(`Life expectancy at birth, female (years)`, na.rm=TRUE)
 mean(`Life expectancy at birth, male (years)`, na.rm=TRUE)
 summary(`Life expectancy at birth, female (years)`, na.rm=TRUE)
@@ -148,7 +148,7 @@ lifespread <- `Life expectancy at birth, female (years)` - `Life expectancy at b
 mean(lifespread, na.rm=TRUE)
 summary(lifespread, na.rm=TRUE)
 plot(lifespread)
-plot(lifespread~`GDP per capita (constant 2010 US$)`)
+plot(lifespread~`GDP per capita (constant 2015 US$)`)
 
 # R has a range of quick functions for descriptive statistics
 sd(lifespread)  # generates error
@@ -166,11 +166,11 @@ hist(lifespread)
 table(`Country Name`)
 
 # we can create categorical variables
-gender_data2022wide$hi_spread <- lifespread>5
-gender_data2022wide$hi_age <- `Life expectancy at birth, female (years)`>78
+gender_data2023wide$hi_spread <- lifespread>5
+gender_data2023wide$hi_age <- `Life expectancy at birth, female (years)`>78
 
 # reattaching the data to make the freshly computed variables available
-attach(gender_data2022wide)
+attach(gender_data2023wide)
 
 # table and cross-tab on the categorical data
 table(hi_spread)
@@ -194,25 +194,25 @@ t.test(`Life expectancy at birth, female (years)`,`Life expectancy at birth, mal
 # consult the help
 
 # linear regression
-lm(lifespread~`GDP per capita (constant 2010 US$)`)
+lm(lifespread~`GDP per capita (constant 2015 US$)`)
 # with no intercept, add -1
-lm(lifespread~`GDP per capita (constant 2010 US$)`-1)
+lm(lifespread~`GDP per capita (constant 2015 US$)`-1)
 
 # checking additional relationships
 lm(lifespread~`Fertility rate, total (births per woman)`)
-lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2010 US$)`)
+lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2015 US$)`)
 
 
 # to get full regression output, use summary
-summary(lm(lifespread~`GDP per capita (constant 2010 US$)`))
+summary(lm(lifespread~`GDP per capita (constant 2015 US$)`))
 summary(lm(lifespread~`Fertility rate, total (births per woman)`))
-summary(lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2010 US$)`))
+summary(lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2015 US$)`))
 
 # multiple explanatory variables? just use +
-summary(lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2010 US$)`+lifespread))
+summary(lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2015 US$)`+lifespread))
 
 # we can store (and use) a regression output as an R object
-regoutput<-lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2010 US$)`+lifespread)
+regoutput<-lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2015 US$)`+lifespread)
 names(regoutput)
 regoutput$residuals
 
