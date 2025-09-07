@@ -2,6 +2,9 @@
 title: "R for Data Analysis"
 output: html_document
 ---
+## This session was last presented 2025-010-05 and is deprecated
+
+## The [Data Topics](https://ryanwomack.com/data_topics/) "Data Analysis" workshop replaces this material in Spring 2026
 
 ## What is R?
 <https://r-project.org>
