@@ -48,7 +48,7 @@ As open source software, there are many other ways to "do R",  Base R in combina
 
 ## What about those packages?
 
-You can discover packages from the full [CRAN list](https://cran.r-project.org/web/packages/available_packages_by_name.html) or read about curated collections of important packages on [CRAN Task Views](https://cran.r-project.org/web/views/).  There were 19,128 packages as of 2022-01-25.  [CRAN](https://cran.r-project.org) is the Comprehensive R Archive Network.
+You can discover packages from the full [CRAN list](https://cran.r-project.org/web/packages/available_packages_by_name.html) or read about curated collections of important packages on [CRAN Task Views](https://cran.r-project.org/web/views/).  There were 22,675 packages as of 2025-09-07.  [CRAN](https://cran.r-project.org) is the Comprehensive R Archive Network.
 
 But for the purposes of these workshops, we will ignore much of the richness and complexity of the R environment and stick with the tidyverse.
   
