@@ -1,7 +1,7 @@
 # R for Data Analysis
 # A tidyverse approach
 # Ryan Womack, rwomack@rutgers.edu
-# 2024-09-05 version
+# 2025-09-10 version
 
 # This session was last presented 2025-10-07 and is deprecated
 
