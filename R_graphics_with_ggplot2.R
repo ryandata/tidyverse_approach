@@ -220,7 +220,7 @@ lastdensity + theme_tufte() + scale_fill_brewer(palette = "Set3") + scale_color_
 mtcars %>%
   ggvis(~wt, ~mpg) %>%
   layer_smooths(span = input_slider(0.5, 1, value = 1)) %>%
-  layer_points(size := input_slider(100, 1000, value = 100))
+  layer_points(size := input_slider(10, 500, value = 50))
 
 mtcars %>% ggvis(x = ~wt) %>%
   layer_densities(
