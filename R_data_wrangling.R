@@ -125,36 +125,36 @@ names(gender_data)
 
 gender_data2 <-
    gender_data %>%
-   pivot_longer(3:66, names_to = "Year", values_to = "Value")
+   pivot_longer(3:67, names_to = "Year", values_to = "Value")
 # the "pipe"
 # magrittr provides the pipe, %>% used throughout the tidyverse
 
-gender_data2022 <-
+gender_data2023 <-
   gender_data2 %>%
-  filter(Year=="2022")
+  filter(Year=="2023")
 
-gender_data2022 <- gender_data2022[,-3]
+gender_data2023 <- gender_data2023[,-3]
 
 # pivot_wider
 # to create wide format data
-gender_data2022wide <-
-  gender_data2022 %>%
+gender_data2023wide <-
+  gender_data2023 %>%
   pivot_wider(names_from = "Indicator Name", values_from = "Value")
 
 # write this version of the data to a file
-write_csv(gender_data2022wide, "widedata.csv")
+write_csv(gender_data2023wide, "widedata.csv")
 
 # drop_na()
 gender_data_drop_na <-
-    gender_data2022wide %>%
+    gender_data2023wide %>%
     drop_na()
 # be careful - here that dropped ALL cases
 
 # complete() - powerful, but be careful
 # complete data does not necessarily imply data quality
 gender_data_complete <-
-  gender_data2022wide %>%
-  complete(fill=list(`A woman can apply for a passport in the same way as a man (1=yes; 0=no)`=mean(`A woman can apply for a passport in the same way as a man (1=yes; 0=no)`,na.rm=TRUE)))
+  gender_data2023wide %>%
+  complete(fill=list(`A woman can apply for a passport in the same way as a man (1=yes; 0=no)`=1))
 
 # nested models
 mtcars_nested <-
@@ -188,46 +188,46 @@ mtcars_nested$model
 
 # mutate() adds new variables that are functions of existing variables
 
-gender_data2022wide <-
-  gender_data2022wide %>%
+gender_data2023wide <-
+  gender_data2023wide %>%
   mutate(gdp_ratio = (`GDP per capita (Current US$)`/10000)/`Fertility rate, total (births per woman)`)
 
 #return of drop_na, only looking at one variable this time
-gender_data2022wide <-
-  drop_na(gender_data2022wide, gdp_ratio)
+gender_data2023wide <-
+  drop_na(gender_data2023wide, gdp_ratio)
 
-plot(gender_data2022wide$gdp_ratio)
+plot(gender_data2023wide$gdp_ratio)
 
-gender_data2022wide <-
-  gender_data2022wide %>%
+gender_data2023wide <-
+  gender_data2023wide %>%
   mutate(hi_ratio = gdp_ratio>0.78)
 
-attach(gender_data2022wide)
+attach(gender_data2023wide)
 
 # select() picks variables based on their names.
 
 gender_gdp <-
-  select(gender_data2022wide, c(`Country Name`,starts_with("GDP")))
+  select(gender_data2023wide, c(`Country Name`,starts_with("GDP")))
 
 gender_gdp
 write_csv(gender_gdp, "gender_gdp.csv")
 
 # filter() picks cases based on their values.
 
-gender_data2022filtered <-
-  gender_data2022wide %>%
+gender_data2023filtered <-
+  gender_data2023wide %>%
   filter(gdp_ratio>2)
 
-gender_data2022filtered
-write_csv(gender_data2022filtered, "gender_filtered.csv")
+gender_data2023filtered
+write_csv(gender_data2023filtered, "gender_filtered.csv")
 
 # summarise() reduces multiple values down to a single summary.
 
-gender_data2022wide %>%
+gender_data2023wide %>%
   summarise(mean = mean(gdp_ratio), n = n(), median = median(gdp_ratio))
 
 # Usually, you'll want to group first
-gender_data2022wide %>%
+gender_data2023wide %>%
   group_by(hi_ratio) %>%
   summarise(mean = mean(gdp_ratio, na.rm=TRUE), n = n())
 
@@ -305,7 +305,7 @@ mtcars %>%
 
 library(broom)
 
-regoutput<-lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, gender_data2022wide)
+regoutput<-lm(`GDP per capita (constant 2015 US$)`~`Fertility rate, total (births per woman)`, gender_data2023wide)
 
 # base R regression summary
 summary(regoutput)
@@ -317,11 +317,11 @@ augment(regoutput)
 
 # a grouped example
 
-regressions <- gender_data2022wide %>%
+regressions <- gender_data2023wide %>%
   group_by(hi_ratio) %>%
   nest() %>%
   mutate(
-    fit = map(data, ~ lm(`GDP per capita (constant 2010 US$)`~`Fertility rate, total (births per woman)`, data=.x,)),
+    fit = map(data, ~ lm(`GDP per capita (constant 2015 US$)`~`Fertility rate, total (births per woman)`, data=.x,)),
     tidied = map(fit, tidy),
     glanced = map(fit, glance),
     augmented = map(fit, augment)
