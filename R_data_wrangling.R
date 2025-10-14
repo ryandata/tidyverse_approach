@@ -1,7 +1,11 @@
 # R data wrangling with dplyr, tidyr, readr, and more
 #
 # Ryan Womack, rwomack@rutgers.edu
-# 2024-10-09 version
+# 2025-10-13 version
+
+# This session was last presented 2025-11-17 and is deprecated
+
+# The [Data Topics](https://ryanwomack.com/data_topics/) "Data Analysis" workshop replaces this material in Spring 2026
 
 # install packages
 install.packages("tidyverse")
