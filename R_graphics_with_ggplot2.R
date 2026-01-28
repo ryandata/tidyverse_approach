@@ -3,6 +3,8 @@
 # Ryan Womack, rwomack@rutgers.edu
 # 2025-09-22 version
 
+# This session was last presented 2026-03-12 and is deprecated
+
 # we will need the tidyverse again
 install.packages("tidyverse")
 
