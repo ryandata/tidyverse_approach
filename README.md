@@ -7,6 +7,8 @@
 ### Full Playlist of screencasts for the Fall 2020 series at 
 https://www.youtube.com/playlist?list=PLCj1LhGni3hNxsLsVNHX6V1LICyklHl2a
 
+### Last module in use from this series (ggplot2) was offered Spring 2026
+### This series is no longer being updated
 
 ## R for data analysis: a tidyverse approach 
 
